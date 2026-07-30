@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 MohitDecodes
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8?logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?logo=framer)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+A modern developer portfolio and learning platform built with **Next.js 15**, featuring blogs, courses, roadmaps, curated resources, YouTube content, and mentorship services.
+
+🌐 **Live Demo:** https://mohitdecodes.vercel.app
+
+</div>
+
+---
+
+## ✨ Features
+
+- 📝 Technical Blogs
+- 🎓 Interactive Courses
+- 🗺️ Developer Learning Roadmaps
+- 📚 Curated Learning Resources
+- 🎥 YouTube Content Showcase
+- 🤝 Topmate Mentorship Page
+- 📱 Fully Responsive Design
+- 🌙 Dark Mode Support
+- ⚡ Smooth Animations with Framer Motion
+- 🔍 Command Menu Navigation
+- 🎨 Modern UI with Tailwind CSS
+
+---
+
+## 🛠 Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| UI Components | Radix UI |
+| Linting | ESLint |
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── app/
+│   ├── about/
+│   ├── blogs/
+│   ├── contact/
+│   ├── courses/
+│   ├── resources/
+│   ├── roadmaps/
+│   ├── topmate/
+│   ├── youtube/
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── sections/
+│   ├── navbar.tsx
+│   ├── footer.tsx
+│   └── command-menu.tsx
+│
+├── data/
+└── lib/
+```
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/mdsahbazkhan/mohitdecodes.git
+
+cd mohitdecodes
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📦 Production Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#> Screenshots are not yet available for this project.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌐 Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 🏠 Home
+- 👨 About
+- 📝 Blogs
+- 🎓 Courses
+- 🗺️ Roadmaps
+- 📚 Resources
+- 🎥 YouTube
+- 🤝 Topmate
+- 📬 Contact
+
+---
+
+## 🎯 Performance
+
+- ⚡ Next.js App Router
+- 📱 Fully Responsive
+- 🌙 Dark Mode
+- 🔍 SEO Friendly
+- 🎨 Modern UI
+- 🚀 Optimized Performance
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+If you'd like to improve the project, feel free to fork the repository and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**MohitDecodes**
+
+🌐 https://mohitdecodes.vercel.app
+
+If you like this project, don't forget to ⭐ the repository!
