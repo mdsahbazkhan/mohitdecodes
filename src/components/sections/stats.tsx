@@ -15,8 +15,8 @@ export default function Stats() {
           className="grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
-            { label: "YouTube Subscribers", value: "500K+", color: "text-red-500" },
-            { label: "Total Views", value: "50M+", color: "text-blue-500" },
+            { label: "YouTube Subscribers", value: "22K+", color: "text-red-500" },
+            { label: "Total Views", value: "2.8M+", color: "text-blue-500" },
             { label: "Free Courses", value: "25+", color: "text-green-500" },
             { label: "Lines of Code Taught", value: "10M+", color: "text-purple-500" },
           ].map((stat) => (

@@ -1,6 +1,6 @@
 export const stats = [
-  { label: "Subscribers", value: "500K+", icon: "👥" },
-  { label: "Total Views", value: "50M+", icon: "👁️" },
+  { label: "Subscribers", value: "22K+", icon: "👥" },
+  { label: "Total Views", value: "2.8M+", icon: "👁️" },
   { label: "Courses", value: "25+", icon: "🎓" },
   { label: "Projects", value: "100+", icon: "🚀" },
 ];

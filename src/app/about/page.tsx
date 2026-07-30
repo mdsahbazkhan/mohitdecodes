@@ -137,8 +137,8 @@ export default function About() {
               className="grid grid-cols-2 gap-4"
             >
               {[
-                { label: "500K+", sublabel: "Subscribers" },
-                { label: "50M+", sublabel: "Total Views" },
+                { label: "22K+", sublabel: "Subscribers" },
+                { label: "2.8M+", sublabel: "Total Views" },
                 { label: "25+", sublabel: "Free Courses" },
                 { label: "100+", sublabel: "Projects" },
               ].map((stat, i) => (
