@@ -156,7 +156,7 @@ export default function YouTube() {
               {playlists.map((playlist, i) => (
                 <motion.a
                   key={playlist.id}
-                  href={`https://youtube.com/playlist?list=${playlist.id}`}
+                  href={playlist.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 20 }}

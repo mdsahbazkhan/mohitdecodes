@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  staggerContainer,
-  fadeInUp,
-} from "@/lib/animations";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
 import {
   GraduationCap,
   BookOpen,
@@ -15,6 +12,7 @@ import {
   MapPin,
 } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const journey = [
   {
@@ -106,8 +104,8 @@ export default function About() {
                 className="text-lg text-muted-foreground mb-6 leading-relaxed"
               >
                 Our mission is to democratize technology education and make
-                high-quality programming courses accessible to everyone, regardless
-                of their background or financial situation.
+                high-quality programming courses accessible to everyone,
+                regardless of their background or financial situation.
               </motion.p>
               <motion.p
                 variants={fadeInUp}
@@ -152,7 +150,9 @@ export default function About() {
                   <div className="text-3xl font-bold text-primary mb-1">
                     {stat.label}
                   </div>
-                  <div className="text-sm text-muted-foreground">{stat.sublabel}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.sublabel}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
@@ -169,10 +169,16 @@ export default function About() {
             variants={staggerContainer}
             className="text-center mb-16"
           >
-            <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl font-bold mb-4">
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl sm:text-4xl font-bold mb-4"
+            >
               The Journey
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-lg text-muted-foreground">
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground"
+            >
               From a small YouTube channel to a global developer community.
             </motion.p>
           </motion.div>
@@ -199,8 +205,12 @@ export default function About() {
                       <div className="text-sm font-medium text-primary mb-2">
                         {item.year}
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                      <p className="text-muted-foreground">{item.description}</p>
+                      <h3 className="text-xl font-semibold mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                   <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-primary-foreground rounded-full items-center justify-center">
@@ -223,10 +233,16 @@ export default function About() {
             variants={staggerContainer}
             className="text-center mb-16"
           >
-            <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl font-bold mb-4">
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl sm:text-4xl font-bold mb-4"
+            >
               Skills & Expertise
             </motion.h2>
-            <motion.p variants={fadeInUp} className="text-lg text-muted-foreground">
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground"
+            >
               Technologies I teach and work with daily.
             </motion.p>
           </motion.div>

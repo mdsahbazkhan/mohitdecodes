@@ -1,6 +1,6 @@
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { roadmaps } from "@/data/roadmaps";
@@ -12,14 +12,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-interface RoadmapPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function RoadmapPage({ params }: RoadmapPageProps) {
-  const roadmap = roadmaps.find((r) => r.id === params.id);
+export default function RoadmapPage() {
+  const { id } = useParams();
+  const roadmap = roadmaps.find((r) => r.id === id);
 
   if (!roadmap) {
     notFound();

@@ -4,6 +4,7 @@ import Features from "@/components/sections/features";
 import CoursesPreview from "@/components/sections/courses-preview";
 import RoadmapsPreview from "@/components/sections/roadmaps-preview";
 import ResourcesPreview from "@/components/sections/resources-preview";
+import TopmatePreview from "@/components/sections/topmate-preview";
 import Testimonials from "@/components/sections/testimonials";
 import Newsletter from "@/components/sections/newsletter";
 import FAQ from "@/components/sections/faq";
@@ -19,6 +20,7 @@ export default function Home() {
       <CoursesPreview />
       <RoadmapsPreview />
       <ResourcesPreview />
+      <TopmatePreview />
       <Testimonials />
       <Newsletter />
       <FAQ />

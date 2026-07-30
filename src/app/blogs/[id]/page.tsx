@@ -1,6 +1,6 @@
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { blogs } from "@/data/blogs";
@@ -15,18 +15,13 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-interface BlogPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function BlogPage({ params }: BlogPageProps) {
-  const blog = blogs.find((b) => b.id === params.id);
+export default function BlogPage() {
+  const { id } = useParams();
+  const blog = blogs.find((b) => b.id === id);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!blog) {
-    notFound();
+    notFound(); 
   }
 
   return (

@@ -2,16 +2,16 @@
 
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { Mail, MapPin, Send } from "lucide-react";
+import Icon from "lucide-react";
 import {
-  Mail,
-  MapPin,
-  Send,
-  Twitter,
-  Github,
-  Linkedin,
-  Youtube,
-  Instagram,
-} from "lucide-react";
+  FaXTwitter,
+  FaGithub,
+  FaLinkedin,
+  FaYoutube,
+  FaInstagram,
+  FaFacebook,
+} from "react-icons/fa6";
 import { useState } from "react";
 
 export default function Contact() {
@@ -21,7 +21,41 @@ export default function Contact() {
     subject: "",
     message: "",
   });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const socialLinks = [
+    {
+      icon: FaYoutube,
+      href: "https://youtube.com/@mohitdecodes",
+      label: "YouTube",
+    },
+    {
+      icon: FaXTwitter,
+      href: "https://twitter.com/mohitdecodes",
+      label: "Twitter",
+    },
+    {
+      icon: FaGithub,
+      href: "https://github.com/mohitdjcet",
+      label: "GitHub",
+    },
+    {
+      icon: FaLinkedin,
+      href: "https://linkedin.com/in/mohitdecodes",
+      label: "LinkedIn",
+    },
+    {
+      icon: FaInstagram,
+      href: "https://instagram.com/mohitdecodes",
+      label: "Instagram",
+    },
+    {
+      icon: FaFacebook,
+      href: "https://facebook.com/mohitdecode",
+      label: "Facebook",
+    },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +94,7 @@ export default function Contact() {
               variants={fadeInUp}
               className="text-xl text-muted-foreground leading-relaxed"
             >
-              Have a question or want to collaborate? I'd love to hear from you.
+              Have a question or want to collaborate? I&apos;d love to hear from you.
               Fill out the form below or reach out through social media.
             </motion.p>
           </motion.div>
@@ -76,13 +110,16 @@ export default function Contact() {
               viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
             >
-              <motion.h2 variants={fadeInUp} className="text-2xl font-bold mb-6">
+              <motion.h2
+                variants={fadeInUp}
+                className="text-2xl font-bold mb-6"
+              >
                 Send a Message
               </motion.h2>
               {status === "success" ? (
                 <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-2xl">
                   <p className="text-green-600 font-medium">
-                    Thanks for reaching out! I'll get back to you soon.
+                    Thanks for reaching out! I&apos;ll get back to you soon.
                   </p>
                 </div>
               ) : (
@@ -165,16 +202,41 @@ export default function Contact() {
               viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
             >
-              <motion.h2 variants={fadeInUp} className="text-2xl font-bold mb-6">
+              <motion.h2
+                variants={fadeInUp}
+                className="text-2xl font-bold mb-6"
+              >
                 Connect With Me
               </motion.h2>
-              <motion.p variants={fadeInUp} className="text-muted-foreground mb-8">
-                Follow me on social media for daily tips, tutorials, and updates.
+              <motion.p
+                variants={fadeInUp}
+                className="text-muted-foreground mb-8"
+              >
+                Follow me on social media for daily tips, tutorials, and
+                updates.
               </motion.p>
+
+              <div className="flex items-center gap-4 mb-8 p-4 rounded-xl border border-border bg-card">
+                <img
+                  src="/mohitdecodeprofileimage.jpeg"
+                  alt="Mohit profile"
+                  className="w-16 h-16 rounded-full object-cover border-2 border-border"
+                />
+                <div>
+                  <div className="font-semibold">Mohit</div>
+                  <div className="text-sm text-muted-foreground">
+                    Full Stack Developer & Creator
+                  </div>
+                </div>
+              </div>
 
               <div className="space-y-4 mb-12">
                 {[
-                  { icon: Mail, label: "Email", value: "hello@mohitdecodes.com" },
+                  {
+                    icon: Mail,
+                    label: "Email",
+                    value: "hello@mohitdecodes.com",
+                  },
                   {
                     icon: MapPin,
                     label: "Location",
@@ -202,24 +264,22 @@ export default function Contact() {
               <div className="space-y-4">
                 <h3 className="font-semibold">Social Media</h3>
                 <div className="flex flex-wrap gap-3">
-                  {[
-                    { icon: Youtube, href: "https://youtube.com/@mohitdecodes", label: "YouTube" },
-                    { icon: Twitter, href: "https://twitter.com/mohitdecodes", label: "Twitter" },
-                    { icon: Github, href: "https://github.com/mohitdecodes", label: "GitHub" },
-                    { icon: Linkedin, href: "https://linkedin.com/in/mohitdecodes", label: "LinkedIn" },
-                    { icon: Instagram, href: "https://instagram.com/mohitdecodes", label: "Instagram" },
-                  ].map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 flex items-center justify-center rounded-xl border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 hover:bg-accent/50 transition-all"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
-                  ))}
+                  {socialLinks.map((social) => {
+                    const SocialIcon = social.icon;
+
+                    return (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-12 h-12 flex items-center justify-center rounded-xl border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 hover:bg-accent/50 transition-all"
+                        aria-label={social.label}
+                      >
+                        <SocialIcon className="w-5 h-5" />
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>

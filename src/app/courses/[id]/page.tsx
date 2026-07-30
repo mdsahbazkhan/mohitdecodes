@@ -1,6 +1,6 @@
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { courses } from "@/data/courses";
@@ -17,14 +17,9 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-interface CoursePageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function CoursePage({ params }: CoursePageProps) {
-  const course = courses.find((c) => c.id === params.id);
+export default function CoursePage() {
+  const { id } = useParams();
+  const course = courses.find((c) => c.id === id);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!course) {
@@ -144,11 +139,31 @@ export default function CoursePage({ params }: CoursePageProps) {
                   <h2 className="text-2xl font-bold mb-6">Course Content</h2>
                   <div className="space-y-3">
                     {[
-                      { title: "Introduction & Setup", lessons: 5, duration: "45m" },
-                      { title: "Core Concepts", lessons: 12, duration: "2h 30m" },
-                      { title: "Building Projects", lessons: 18, duration: "4h 15m" },
-                      { title: "Advanced Topics", lessons: 8, duration: "1h 45m" },
-                      { title: "Deployment & Best Practices", lessons: 5, duration: "1h" },
+                      {
+                        title: "Introduction & Setup",
+                        lessons: 5,
+                        duration: "45m",
+                      },
+                      {
+                        title: "Core Concepts",
+                        lessons: 12,
+                        duration: "2h 30m",
+                      },
+                      {
+                        title: "Building Projects",
+                        lessons: 18,
+                        duration: "4h 15m",
+                      },
+                      {
+                        title: "Advanced Topics",
+                        lessons: 8,
+                        duration: "1h 45m",
+                      },
+                      {
+                        title: "Deployment & Best Practices",
+                        lessons: 5,
+                        duration: "1h",
+                      },
                     ].map((section, i) => (
                       <div
                         key={i}
