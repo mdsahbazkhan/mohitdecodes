@@ -63,6 +63,20 @@ type RawOffering = {
   link?: string;
   type?: string;
 };
+interface Webinar {
+  id: string;
+  title: string;
+  description: string;
+  poster: string;
+  category: string;
+  date: string;
+  duration: string;
+  price: number;
+  url?: string;
+  link?: string;
+  weeklyBreakdown: string[];
+  perks: string[];
+}
 
 function toOffering(
   raw: RawOffering,
@@ -478,7 +492,7 @@ function OfferingsSection() {
   );
 }
 
-function WebinarCard({ webinar }: { webinar: any }) {
+function WebinarCard({ webinar }: { webinar: Webinar }) {
   return (
     <motion.a
       variants={fadeInUp}
@@ -568,7 +582,7 @@ function WebinarsSection() {
           variants={staggerContainer}
           className="grid grid-cols-1 gap-6 md:grid-cols-2"
         >
-          {webinars.map((webinar: any) => (
+          {webinars.map((webinar: Webinar) => (
             <WebinarCard key={webinar.id} webinar={webinar} />
           ))}
         </motion.div>
