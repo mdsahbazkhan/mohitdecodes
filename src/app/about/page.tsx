@@ -10,58 +10,67 @@ import {
   Award,
   Calendar,
   MapPin,
+  Code2,
+  Brain,
+  BarChart3,
+  MessageSquare,
+  FileText,
+  Video,
+  CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const journey = [
-  {
-    year: "2020",
-    title: "Started YouTube Channel",
-    description:
-      "Started MohitDecodes with a passion for teaching web development to everyone for free.",
-    icon: GraduationCap,
-  },
-  {
-    year: "2021",
-    title: "100K Subscribers",
-    description:
-      "Hit 100K subscribers and expanded content to cover full-stack development courses.",
-    icon: Users,
-  },
-  {
-    year: "2022",
-    title: "Platform Launch",
-    description:
-      "Launched mohitdecodes.com as a complete learning platform with resources and roadmaps.",
-    icon: BookOpen,
-  },
-  {
-    year: "2023",
-    title: "500K Community",
-    description:
-      "Grew to 500K+ subscribers and became one of the most loved developer education channels.",
-    icon: Award,
-  },
-  {
-    year: "2024",
-    title: "Global Impact",
-    description:
-      "Helping millions of developers worldwide with free, quality education.",
-    icon: Target,
-  },
+const expertiseAreas = [
+  "Full-Stack Web Development (MERN & MEAN Stack)",
+  "React.js, Next.js, JavaScript & TypeScript",
+  "Node.js, Express.js & REST API Development",
+  "Python, FastAPI & Django Development",
+  "AI/ML Fundamentals & Real-World Applications",
+  "Generative AI, LLMs & AI Integrations",
+  "Agentic AI & AI Agent Development",
+  "Data Analytics (Python, SQL, Pandas, NumPy)",
+  "Power BI Dashboard Development & Data Visualization",
+  "Frontend Architecture & System Design",
+  "Redux, State Management & Performance Optimization",
+  "Micro Frontends & Module Federation",
+  "PWA & Modern Web Technologies",
+  "Technical Interview Preparation",
+  "Resume & LinkedIn Profile Reviews",
+  "Mock Interviews & Career Guidance",
+  "Project, Portfolio & Code Reviews",
+];
+
+const whyWorkWithMe = [
+  "13+ years of hands-on software engineering and leadership experience",
+  "Expertise across Full-Stack Development, AI, Data Analytics, and modern web technologies",
+  "Experience building scalable, enterprise-grade applications used by millions of users",
+  "1000+ successful mentorship and career guidance sessions",
+  "Practical, industry-focused learning with real-world examples",
+  "Personalized guidance tailored to your career goals",
+  "Strong focus on coding best practices, system design, and performance optimization",
+  "Actionable feedback on projects, resumes, portfolios, and interview prep",
+];
+
+const stats = [
+  { label: "Years Experience", value: "13+" },
+  { label: "Mentorship Sessions", value: "1000+" },
+  { label: "Technologies", value: "20+" },
+  { label: "Developers Helped", value: "5000+" },
 ];
 
 export default function About() {
   return (
     <div className="min-h-screen">
+      {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="max-w-3xl"
+            className="max-w-4xl"
           >
             <motion.h1
               variants={fadeInUp}
@@ -69,97 +78,165 @@ export default function About() {
             >
               About{" "}
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                MohitDecodes
+                Mohit Kumar
               </span>
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className="text-xl text-muted-foreground leading-relaxed"
+              className="text-xl text-muted-foreground leading-relaxed mb-6"
             >
-              Empowering developers to master modern web technologies through
-              practical, project-based learning. Free education for everyone,
-              everywhere.
+              Hi, I&apos;m Mohit Kumar, an Engineering Manager, Corporate Trainer,
+              and Career Mentor with 13+ years of experience in software
+              development, engineering leadership, and technical mentoring.
+            </motion.p>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground leading-relaxed mb-8"
+            >
+              I specialize in designing and building scalable, high-performance
+              applications using React.js, JavaScript, TypeScript, Next.js, Redux,
+              MERN Stack, MEAN Stack, Python, FastAPI, Django, AI/ML, Generative
+              AI, Agentic AI, Data Analytics, Power BI, Micro Frontends, Module
+              Federation, Progressive Web Apps (PWA), and modern cloud
+              technologies.
+            </motion.p>
+            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+              <Link
+                href="/topmate"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+              >
+                Book a Session
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/courses"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground border border-border rounded-xl font-medium hover:bg-accent/50 transition-colors"
+              >
+                <BookOpen className="w-5 h-5" />
+                Explore Courses
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          >
+            {stats.map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={fadeInUp}
+                className="p-6 rounded-2xl border border-border bg-card text-center"
+              >
+                <div className="text-3xl font-bold text-primary mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Career Overview */}
+      <section className="py-24 bg-muted/30 border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="max-w-4xl mx-auto"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl sm:text-4xl font-bold mb-8 text-center"
+            >
+              Career Overview
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground leading-relaxed mb-6"
+            >
+              Throughout my career, I&apos;ve led engineering teams, architected
+              enterprise-scale applications, and delivered production-ready
+              software serving millions of users. Beyond software development, I am
+              passionate about mentoring aspiring developers and helping
+              professionals advance their careers through practical guidance and
+              industry-focused learning.
+            </motion.p>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground leading-relaxed"
+            >
+              With 1000+ mentorship and career guidance sessions, I&apos;ve helped
+              students, freshers, and experienced professionals strengthen their
+              technical skills, prepare for interviews, transition into new roles,
+              and achieve their career goals.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
+      {/* Areas of Expertise */}
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl sm:text-4xl font-bold mb-4"
             >
-              <motion.h2
+              Areas of Expertise
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            >
+              Comprehensive guidance across full-stack development, AI/ML, data
+              analytics, and career mentorship.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            {expertiseAreas.map((area) => (
+              <motion.div
+                key={area}
                 variants={fadeInUp}
-                className="text-3xl sm:text-4xl font-bold mb-6"
+                className="flex items-start gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/20 transition-colors"
               >
-                Mission & Vision
-              </motion.h2>
-              <motion.p
-                variants={fadeInUp}
-                className="text-lg text-muted-foreground mb-6 leading-relaxed"
-              >
-                Our mission is to democratize technology education and make
-                high-quality programming courses accessible to everyone,
-                regardless of their background or financial situation.
-              </motion.p>
-              <motion.p
-                variants={fadeInUp}
-                className="text-lg text-muted-foreground mb-8 leading-relaxed"
-              >
-                We envision a world where anyone with an internet connection can
-                learn the skills needed to build a successful career in tech.
-              </motion.p>
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl">
-                  <Lightbulb className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Innovation</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl">
-                  <Users className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Community</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl">
-                  <Target className="w-5 h-5 text-primary" />
-                  <span className="font-medium">Quality</span>
-                </div>
+                <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                <span className="text-sm text-muted-foreground leading-relaxed">
+                  {area}
+                </span>
               </motion.div>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="grid grid-cols-2 gap-4"
-            >
-              {[
-                { label: "22K+", sublabel: "Subscribers" },
-                { label: "2.8M+", sublabel: "Total Views" },
-                { label: "25+", sublabel: "Free Courses" },
-                { label: "100+", sublabel: "Projects" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  variants={fadeInUp}
-                  className="p-6 rounded-2xl border border-border bg-card text-center"
-                >
-                  <div className="text-3xl font-bold text-primary mb-1">
-                    {stat.label}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.sublabel}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
+      {/* Why Work With Me */}
       <section className="py-24 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -173,109 +250,89 @@ export default function About() {
               variants={fadeInUp}
               className="text-3xl sm:text-4xl font-bold mb-4"
             >
-              The Journey
+              Why Work With Me
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-lg text-muted-foreground"
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              From a small YouTube channel to a global developer community.
+              A mentor who brings real-world experience, proven results, and a
+              genuine passion for helping others succeed.
             </motion.p>
           </motion.div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 hidden md:block" />
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="space-y-12"
-            >
-              {journey.map((item, i) => (
-                <motion.div
-                  key={item.year}
-                  variants={fadeInUp}
-                  className={`relative flex items-center gap-8 ${
-                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
-                >
-                  <div className="flex-1">
-                    <div className="p-6 rounded-2xl border border-border bg-card hover:border-primary/20 transition-colors">
-                      <div className="text-sm font-medium text-primary mb-2">
-                        {item.year}
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-primary-foreground rounded-full items-center justify-center">
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 hidden md:block" />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {whyWorkWithMe.map((reason) => (
+              <motion.div
+                key={reason}
+                variants={fadeInUp}
+                className="p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all"
+              >
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {reason}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-3xl sm:text-4xl font-bold mb-6"
+          >
+            Let&apos;s Build Something Great Together
+          </motion.h2>
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-lg text-muted-foreground mb-8 leading-relaxed"
+          >
+            Whether you&apos;re beginning your software engineering journey,
+            preparing for technical interviews, exploring MERN Stack, MEAN Stack,
+            AI/ML, Generative AI, Agentic AI, Data Analytics, Power BI, or
+            planning your next career move, my goal is to provide practical
+            knowledge, clear direction, and actionable guidance that helps you
+            grow with confidence.
+          </motion.p>
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="text-center mb-16"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="flex flex-wrap items-center justify-center gap-4"
           >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl sm:text-4xl font-bold mb-4"
+            <Link
+              href="/topmate"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors"
             >
-              Skills & Expertise
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-lg text-muted-foreground"
+              Book a Mentorship Session
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/courses"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-secondary text-secondary-foreground border border-border rounded-xl font-medium hover:bg-accent/50 transition-colors"
             >
-              Technologies I teach and work with daily.
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[
-              "React",
-              "Next.js",
-              "TypeScript",
-              "Node.js",
-              "Express",
-              "MongoDB",
-              "PostgreSQL",
-              "Tailwind CSS",
-              "Git",
-              "Docker",
-              "AWS",
-              "GraphQL",
-            ].map((skill, i) => (
-              <motion.div
-                key={skill}
-                variants={fadeInUp}
-                className="px-4 py-3 rounded-xl border border-border bg-card text-center text-sm font-medium hover:border-primary/20 hover:text-primary transition-colors"
-              >
-                {skill}
-              </motion.div>
-            ))}
+              <BookOpen className="w-5 h-5" />
+              Browse Courses
+            </Link>
           </motion.div>
         </div>
       </section>
