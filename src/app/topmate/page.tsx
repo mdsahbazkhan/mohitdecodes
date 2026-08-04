@@ -150,46 +150,6 @@ function ProfileHero() {
   );
 }
 
-function AboutSection() {
-  return (
-    <section className="py-20 bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-        >
-          <motion.h2
-            variants={fadeInUp}
-            className="text-3xl sm:text-4xl font-bold mb-6 text-center"
-          >
-            About <span className="text-primary">Me</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="text-lg text-muted-foreground leading-relaxed mb-8"
-          >
-            {profile.bio}
-          </motion.p>
-          <motion.div
-            variants={fadeInUp}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {highlights.map((skill) => (
-              <span
-                key={skill}
-                className="px-4 py-2 bg-card border border-border rounded-xl text-sm font-medium hover:border-primary/30 transition-colors"
-              >
-                {skill}
-              </span>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 function SectionHeader({
   title,
@@ -813,7 +773,7 @@ export default function Topmate() {
     <div className="min-h-screen">
       
       <ProfileHero />
-      <AboutSection />
+     
       <ServicesSection />
       <PackagesSection />
       <WebinarsSection />
@@ -822,36 +782,7 @@ export default function Topmate() {
       <CTASection />
       <FAQSection />
 
-      <footer className="border-t border-border bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-xl tracking-tight">
-                Topmate
-              </span>
-            </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <a
-                href="/terms"
-                className="hover:text-foreground transition-colors"
-              >
-                Terms
-              </a>
-              <span>·</span>
-              <a
-                href="/privacy"
-                className="hover:text-foreground transition-colors"
-              >
-                Privacy
-              </a>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} MohitDecodes. Built with ❤️ for
-              developers.
-            </p>
-          </div>
-        </div>
-      </footer>
+    
     </div>
   );
 }

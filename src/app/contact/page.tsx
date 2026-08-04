@@ -261,7 +261,7 @@ export default function Contact() {
                 ))}
               </div>
 
-              <div className="space-y-4">
+              {/* <div className="space-y-4">
                 <h3 className="font-semibold">Social Media</h3>
                 <div className="flex flex-wrap gap-3">
                   {socialLinks.map((social) => {
@@ -281,7 +281,7 @@ export default function Contact() {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>
