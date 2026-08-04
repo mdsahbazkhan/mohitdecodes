@@ -2,20 +2,7 @@
 
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import {
-  GraduationCap,
-  BookOpen,
-  Users,
-  Target,
-  Lightbulb,
-  Award,
-  Calendar,
-  MapPin,
-  Code2,
-  Brain,
-  BarChart3,
-  MessageSquare,
-  FileText,
-  Video,
+ 
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
@@ -63,7 +50,7 @@ const stats = [
 export default function About() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div

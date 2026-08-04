@@ -31,9 +31,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* -------------------------------------------------------------------------- */
-/* Data normalization                                                         */
-/* -------------------------------------------------------------------------- */
 
 type TabKey = "all" | "call" | "dm" | "digital" | "package";
 
@@ -53,7 +50,7 @@ interface Offering {
   url: string;
 }
 
-// NOTE: adjust `raw.url` / `raw.link` / `raw.type` below to match your real field names.
+
 function toOffering(
   raw: any,
   tab: Offering["tab"],
@@ -115,9 +112,7 @@ const TABS: { key: TabKey; label: string; icon: React.ReactNode }[] = [
   { key: "package", label: "Packages", icon: <Trophy className="w-4 h-4" /> },
 ];
 
-/* -------------------------------------------------------------------------- */
-/* Hero                                                                       */
-/* -------------------------------------------------------------------------- */
+
 
 function ProfileHero() {
   return (
@@ -233,9 +228,7 @@ function ProfileHero() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Shared section header                                                     */
-/* -------------------------------------------------------------------------- */
+
 
 function SectionHeader({
   title,
@@ -267,9 +260,7 @@ function SectionHeader({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Offering card (used for 1:1 Call / Priority DM / Digital / Packages)      */
-/* -------------------------------------------------------------------------- */
+
 
 function OfferingCard({ item }: { item: Offering }) {
   const hasDiscount =
@@ -366,9 +357,7 @@ function OfferingCard({ item }: { item: Offering }) {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tab pills                                                                  */
-/* -------------------------------------------------------------------------- */
+
 
 function TabPills({
   active,
@@ -420,9 +409,7 @@ function TabPills({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Offerings section (All / 1:1 Call / Priority DM / Digital / Packages)     */
-/* -------------------------------------------------------------------------- */
+
 
 function OfferingsSection() {
   const offerings = useOfferings();
@@ -488,9 +475,7 @@ function OfferingsSection() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Webinars (kept as its own section — not part of the 5 required tabs)      */
-/* -------------------------------------------------------------------------- */
+
 
 function WebinarCard({ webinar }: { webinar: any }) {
   return (
@@ -591,9 +576,7 @@ function WebinarsSection() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Reviews                                                                    */
-/* -------------------------------------------------------------------------- */
+
 
 function ThumbsUp(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -705,9 +688,7 @@ function ReviewsSection() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* CTA                                                                        */
-/* -------------------------------------------------------------------------- */
+
 
 function CTASection() {
   return (
@@ -743,9 +724,7 @@ function CTASection() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* FAQ                                                                        */
-/* -------------------------------------------------------------------------- */
+
 
 function FAQSection() {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -805,9 +784,6 @@ function FAQSection() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* Page                                                                       */
-/* -------------------------------------------------------------------------- */
 
 export default function Topmate() {
   return (
