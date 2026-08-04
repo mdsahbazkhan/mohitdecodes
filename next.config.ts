@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingRoot: "/home/sahbaz/Projects/mohitdecodes",
 };
 
 export default nextConfig;
