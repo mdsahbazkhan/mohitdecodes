@@ -47,12 +47,13 @@ interface Offering {
   badge?: string;
   url: string;
 }
-type RawOffering = {
+interface RawOffering {
   id: string;
   title: string;
   description: string;
   poster: string;
-  category: string;
+  category?: string;
+  format?: string;
   price: number;
   originalPrice?: number;
   rating?: number;
@@ -62,7 +63,7 @@ type RawOffering = {
   url?: string;
   link?: string;
   type?: string;
-};
+}
 interface Webinar {
   id: string;
   title: string;
