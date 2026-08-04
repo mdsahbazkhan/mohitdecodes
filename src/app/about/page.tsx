@@ -5,6 +5,7 @@ import {
  
   CheckCircle2,
   ArrowRight,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";

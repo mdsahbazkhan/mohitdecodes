@@ -10,7 +10,6 @@ import {
   webinars,
   products,
   reviews,
-  highlights,
   faqs,
 } from "@/data/topmate";
 import {
@@ -31,7 +30,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-
 type TabKey = "all" | "call" | "dm" | "digital" | "package";
 
 interface Offering {
@@ -49,10 +47,25 @@ interface Offering {
   badge?: string;
   url: string;
 }
-
+type RawOffering = {
+  id: string;
+  title: string;
+  description: string;
+  poster: string;
+  category: string;
+  price: number;
+  originalPrice?: number;
+  rating?: number;
+  duration?: string;
+  badge?: string;
+  popular?: boolean;
+  url?: string;
+  link?: string;
+  type?: string;
+};
 
 function toOffering(
-  raw: any,
+  raw: RawOffering,
   tab: Offering["tab"],
   tabLabel: string,
   badgeFallback?: string,
@@ -76,19 +89,19 @@ function toOffering(
 
 function useOfferings() {
   return useMemo(() => {
-    const callItems = (services as any[])
+    const callItems = (services as RawOffering[])
       .filter((s) => s.type !== "dm")
       .map((s) => toOffering(s, "call", "1:1 Call"));
 
-    const dmItems = (services as any[])
+    const dmItems = (services as RawOffering[])
       .filter((s) => s.type === "dm")
       .map((s) => toOffering(s, "dm", "Priority DM"));
 
-    const digitalItems = (products as any[]).map((p) =>
+    const digitalItems = (products as RawOffering[]).map((p) =>
       toOffering(p, "digital", "Digital Products"),
     );
 
-    const packageItems = (packages as any[]).map((pkg) =>
+    const packageItems = (packages as RawOffering[]).map((pkg) =>
       toOffering(pkg, "package", "Packages", "Best Deal"),
     );
 
@@ -111,8 +124,6 @@ const TABS: { key: TabKey; label: string; icon: React.ReactNode }[] = [
   },
   { key: "package", label: "Packages", icon: <Trophy className="w-4 h-4" /> },
 ];
-
-
 
 function ProfileHero() {
   return (
@@ -228,8 +239,6 @@ function ProfileHero() {
   );
 }
 
-
-
 function SectionHeader({
   title,
   subtitle,
@@ -259,8 +268,6 @@ function SectionHeader({
     </div>
   );
 }
-
-
 
 function OfferingCard({ item }: { item: Offering }) {
   const hasDiscount =
@@ -357,8 +364,6 @@ function OfferingCard({ item }: { item: Offering }) {
   );
 }
 
-
-
 function TabPills({
   active,
   onChange,
@@ -408,8 +413,6 @@ function TabPills({
     </div>
   );
 }
-
-
 
 function OfferingsSection() {
   const offerings = useOfferings();
@@ -474,8 +477,6 @@ function OfferingsSection() {
     </section>
   );
 }
-
-
 
 function WebinarCard({ webinar }: { webinar: any }) {
   return (
@@ -575,8 +576,6 @@ function WebinarsSection() {
     </section>
   );
 }
-
-
 
 function ThumbsUp(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -688,8 +687,6 @@ function ReviewsSection() {
   );
 }
 
-
-
 function CTASection() {
   return (
     <section className="relative overflow-hidden bg-primary py-20">
@@ -723,8 +720,6 @@ function CTASection() {
     </section>
   );
 }
-
-
 
 function FAQSection() {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -783,7 +778,6 @@ function FAQSection() {
     </section>
   );
 }
-
 
 export default function Topmate() {
   return (
