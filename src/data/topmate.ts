@@ -25,9 +25,11 @@ export const profile = {
 export const services = [
   {
     id: "1",
-    title: "Developer Roadmap & Career Guidance",
-    description: "Get a personalized roadmap for Frontend, Backend, Full Stack, or AI development along with career guidance.",
-    poster: "/topmate/career-guidance.jpg",
+    title: "Mock Interview Session – (Frontend and Backend)",
+    description:
+      "Prepare for your next technical interview with a real-time mock interview session focused on Frontend Development, Backend Development, Full Stack Development, DSA, and JavaScript problem solving.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_c04379cd-b172-4d7d-a3a4-402558152c76.png",
     rating: 5,
     duration: "60 mins",
     category: "Career",
@@ -35,12 +37,15 @@ export const services = [
     popular: true,
     bookings: 3,
     questions: ["What is the call about?"],
+    url: "https://topmate.io/mohitdecodes/2101015?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "2",
     title: "LinkedIn Profile Review & Optimization",
-    description: "Optimize your LinkedIn profile, personal branding, headline, About section, and recruiter visibility.",
-    poster: "/topmate/linkedin.jpg",
+    description:
+      "Optimize your LinkedIn profile, personal branding, headline, About section, and recruiter visibility.",
+    poster:
+      "https://topmate-production.s3.ap-south-1.amazonaws.com/custom-meta-image.png",
     rating: 5,
     duration: "45 mins",
     category: "Resume",
@@ -48,12 +53,15 @@ export const services = [
     popular: false,
     bookings: 2,
     questions: ["What is the call about?"],
+    url: "https://topmate.io/mohitdecodes/2139888?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "3",
-    title: "Learn any Concept and Topic: HTML to React",
-    description: "Master any web development concept from HTML to React with personalized guidance and hands-on practice.",
-    poster: "/topmate/learning.jpg",
+    title: "Interview Preparation & Tips",
+    description:
+      "Whether you are a fresher or an experienced developer, technical interviews can be challenging without proper preparation and real interview practice. In this session, I will provide you with personalized interview preparation strategies, mock interview sessions, and actionable tips to help you succeed in your upcoming interviews.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_c574ad8b-7d8f-496c-9e21-60aac400c956.png",
     rating: 5,
     duration: "60 mins",
     category: "Frontend",
@@ -61,12 +69,15 @@ export const services = [
     popular: false,
     bookings: 5,
     questions: ["What is the call about?"],
+    url: "https://topmate.io/mohitdecodes/1519843?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "4",
-    title: "Interview Preparation & Tips",
-    description: "Prepare for technical and HR interviews with mock sessions, resume feedback, and interview strategies.",
-    poster: "/topmate/interview.jpg",
+    title: "Developer Roadmap & Career Guidance",
+    description:
+      "If you want to build a successful career in Development but are confused about then this session is for you.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_377a398f-09fd-408c-a3d0-9966b472739f.png",
     rating: 5,
     duration: "60 mins",
     category: "Interview",
@@ -74,38 +85,32 @@ export const services = [
     popular: true,
     bookings: 3,
     questions: ["What is the call about?"],
+    url: "https://topmate.io/mohitdecodes/1519827?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "5",
-    title: "Mock Interview Session - Frontend & Backend",
-    description: "Realistic mock interview covering frontend and backend questions with detailed feedback.",
-    poster: "/topmate/mock-interview.jpg",
+    title: "1:1 Mentorship For DSA + Full-Stack Development",
+    description:
+      "In this 80-minute 1:1 mentorship session, I will help you improve your DSA skills, JavaScript problem-solving, and MERN Stack development with practical industry-level guidance.",
+    poster:
+      "https://sharing-image-assets.s3.ap-south-1.amazonaws.com/imejis_output%2Funknown%2Fe93b2066-fbd8-4ea7-b590-33bfbac0abb2.png",
     rating: 5,
-    duration: "60 mins",
+    duration: "80 mins",
     category: "Interview",
-    price: 499,
+    price: 799,
     popular: false,
     bookings: 1,
     questions: ["What is the call about?"],
+    url: "https://topmate.io/mohitdecodes/2100970?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
+
   {
     id: "6",
-    title: "1:1 Mentorship for DSA + Full-Stack Development",
-    description: "Comprehensive mentorship covering Data Structures, Algorithms, and Full-Stack development with real-world projects.",
-    poster: "/topmate/mentorship.jpg",
-    rating: 5,
-    duration: "80 mins",
-    category: "Full Stack",
-    price: 799,
-    popular: true,
-    bookings: 8,
-    questions: ["What is the call about?"],
-  },
-  {
-    id: "7",
     title: "Resume Review & ATS Optimization",
-    description: "Optimize your resume for ATS, improve formatting, and receive actionable feedback for better interview chances.",
-    poster: "/topmate/resume.jpg",
+    description:
+      "Optimize your resume for ATS, improve formatting, and receive actionable feedback for better interview chances.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_a66a1ff2-7079-41c7-aca2-10984731c95f.png",
     rating: 5,
     duration: "45 mins",
     category: "Resume",
@@ -116,6 +121,7 @@ export const services = [
       "What is the call about?",
       "Share your current resume before the session",
     ],
+    url: "https://topmate.io/mohitdecodes/1519553?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
 ];
 
@@ -123,18 +129,21 @@ export const packages = [
   {
     id: "1",
     title: "3 Months Mentorship (4 Sessions)",
-    description: "A comprehensive 3-month mentorship with 4 one-on-one sessions covering roadmap planning, skill development, interview prep, and career guidance.",
+    description:
+      "A comprehensive 3-month mentorship with 4 one-on-one sessions covering roadmap planning, skill development, interview prep, and career guidance.",
     price: 1600,
     originalPrice: 1996,
     duration: "4 sessions × 60 mins",
     category: "Package",
     popular: true,
+    poster:"https://static.topmate.io/profile_pic_899188_391b6c6f-af68-45c6-ab21-d2be04abe897.png",
     agenda: [
       "Session 1: Personalized Learning Roadmap",
       "Session 2: Skill Building & Code Review",
       "Session 3: Interview Preparation",
       "Session 4: Career Strategy & Next Steps",
     ],
+     url:"https://topmate.io/mohitdecodes/2101002?utm_source=public_profile&utm_campaign=mohitdecodes"
   },
 ];
 
@@ -142,7 +151,8 @@ export const webinars = [
   {
     id: "1",
     title: "Master JavaScript & React in 2026",
-    description: "A comprehensive live webinar covering modern JavaScript, React 19, hooks, state management, and building production-ready applications.",
+    description:
+      "A comprehensive live webinar covering modern JavaScript, React 19, hooks, state management, and building production-ready applications.",
     poster: "/topmate/webinar-js.jpg",
     price: 9999,
     duration: "120 mins",
@@ -160,7 +170,8 @@ export const webinars = [
   {
     id: "2",
     title: "MERN Stack Full Course is Live!",
-    description: "Complete MERN Stack course covering MongoDB, Express, React, and Node.js with real-world project building.",
+    description:
+      "Complete MERN Stack course covering MongoDB, Express, React, and Node.js with real-world project building.",
     poster: "/topmate/webinar-mern.jpg",
     price: 15000,
     duration: "480 mins",
@@ -173,62 +184,104 @@ export const webinars = [
       "Week 5-6: Node.js API Development",
       "Week 7-8: Full-Stack Integration",
     ],
-    perks: ["Full course material", "Code repository", "Completion Certificate", "1:1 Q&A"],
+    perks: [
+      "Full course material",
+      "Code repository",
+      "Completion Certificate",
+      "1:1 Q&A",
+    ],
+   
   },
 ];
 
 export const products = [
   {
     id: "1",
-    title: "Angular & JavaScript Interview Q&A Handbook",
-    description: "600+ handpicked interview questions with detailed answers covering Angular and JavaScript fundamentals.",
-    poster: "/topmate/handbook-angular.jpg",
+    title: "Java Interview Questions & Answers Handbook",
+    description:
+      "Top 1000 Java Interview Questions & Answers (2026 Edition)Ace your next Java interview with this comprehensive handbook containing 1000 carefully curated Java interview questions and answers.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_0cbcd8ef-1b05-464e-8249-709356d97b4b.png",
     format: "PDF",
-    questions: 600,
-    topics: ["Angular Fundamentals", "JavaScript Core", "TypeScript", "RxJS"],
+    price: 65,
+    questions: 1000,
+    topics: ["Java Fundamentals", "Spring Boot", "JVM", "Multithreading"],
+    url: "https://topmate.io/mohitdecodes/2174053?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "2",
-    title: "JavaScript & React Interview Preparation Handbook",
-    description: "800+ interview questions with comprehensive answers for JavaScript and React interviews.",
-    poster: "/topmate/handbook-js.jpg",
+    title: "FastAPI Handbook + Course + Code",
+    description:
+      "Master FastAPI from beginner to advanced with this complete learning bundle. Whether you're a student, fresher, Python developer, or working professional, this bundle provides everything you need to build modern, production-ready REST APIs.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_919fd12f-bc74-49f5-b1d1-c0d048957c51.png",
     format: "PDF",
+    price: 65,
     questions: 800,
-    topics: ["JS Basics", "Advanced JS", "React Hooks", "State Management"],
+    topics: [
+      "FastAPI Basics",
+      "Advanced FastAPI",
+      "Database Integration",
+      "Authentication",
+      "Deployment",
+    ],
+    url: "https://topmate.io/mohitdecodes/2224241?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "3",
-    title: "MERN Course Interview Preparation Handbook",
-    description: "Curated interview questions specifically for MERN Stack developers.",
-    poster: "/topmate/handbook-mern.jpg",
+    title: "NodeJS & JavaScript Interview Preparation Handbook",
+    description:
+      "Prepare for your next interview with this comprehensive handbook featuring 600+ carefully curated Node.js and JavaScript interview questions and answers.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_a1645be9-83bf-4a23-a3b5-b07739d3d333.png",
     format: "PDF",
+    price: 65,
     questions: 500,
-    topics: ["MongoDB", "Express", "React", "Node.js"],
+    topics: ["MongoDB", "Express", "JavaScript", "Node.js"],
+    url: "https://topmate.io/mohitdecodes/2174068?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "4",
-    title: "Complete FastAPI Learning Bundle",
-    description: "Everything you need to master FastAPI from basics to production deployment.",
-    poster: "/topmate/fastapi.jpg",
-    format: "Course",
-    topics: ["FastAPI Basics", "Database Integration", "Authentication", "Deployment"],
+    title: "Angular & JavaScript Interview Q&A Handbook",
+    description:
+      "Everything you need to master Angular and JavaScript interview questions.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_8a99f054-0091-4bf1-9c6d-6d690f3b72da.png",
+    format: "PDF",
+    popular: true,
+    price: 65,
+
+    topics: [
+      "Angular Basics",
+      "Advanced Angular",
+      "Database Integration",
+      "Authentication",
+      "Deployment",
+    ],
+    url: "https://topmate.io/mohitdecodes/2174079?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "5",
     title: "Django Backend Development Bundle",
-    description: "Complete Django backend development with practical projects and best practices.",
-    poster: "/topmate/django.jpg",
+    description:
+      "Complete Django backend development with practical projects and best practices.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_1bc62a3b-42a2-464e-8b11-8895114f9e7b.png",
     format: "Course",
     topics: ["Django Basics", "ORM", "REST APIs", "Deployment"],
+    url: "https://topmate.io/mohitdecodes/2165788?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
   {
     id: "6",
-    title: "Top 1000 Java Interview Questions & Answers 2026 Edition",
-    description: "The most comprehensive Java interview preparation guide with 1000 questions.",
-    poster: "/topmate/java.jpg",
+    title: "JavaScript & React Interview Preparation Handbook",
+    description:
+      "The most comprehensive JavaScript and React interview preparation guide with 1000 questions.",
+    poster:
+      "https://static.topmate.io/profile_pic_899188_eb791790-6ece-4101-a4a7-931274682466.png",
     format: "PDF",
-    questions: 1000,
+    price: 65,
     topics: ["Core Java", "Spring Boot", "JVM", "Multithreading"],
+    url: "https://topmate.io/mohitdecodes/2138305?utm_source=public_profile&utm_campaign=mohitdecodes",
   },
 ];
 
@@ -290,26 +343,31 @@ export const faqs = [
   {
     id: "1",
     question: "Who is MohitDecodes for?",
-    answer: "MohitDecodes is for anyone who wants to learn web development, from absolute beginners to experienced developers looking to upgrade their skills. Whether you're a student, a professional switching careers, or a developer wanting to stay current with modern technologies, there's something here for you.",
+    answer:
+      "MohitDecodes is for anyone who wants to learn web development, from absolute beginners to experienced developers looking to upgrade their skills. Whether you're a student, a professional switching careers, or a developer wanting to stay current with modern technologies, there's something here for you.",
   },
   {
     id: "2",
     question: "Are the services refundable?",
-    answer: "Yes! We offer a full refund within 24 hours of booking if you're not satisfied. Simply reach out to us and we'll process your refund immediately.",
+    answer:
+      "Yes! We offer a full refund within 24 hours of booking if you're not satisfied. Simply reach out to us and we'll process your refund immediately.",
   },
   {
     id: "3",
     question: "How do booking sessions work?",
-    answer: "After booking a session, you'll receive a confirmation with the date, time, and a zoom/video call link. You can reschedule up to 24 hours before the session without any penalty.",
+    answer:
+      "After booking a session, you'll receive a confirmation with the date, time, and a zoom/video call link. You can reschedule up to 24 hours before the session without any penalty.",
   },
   {
     id: "4",
     question: "Do you provide certification?",
-    answer: "Currently, we don't provide official certificates for 1:1 sessions. However, the projects you build during mentorship can be added to your portfolio, which is often more valuable to employers than certificates.",
+    answer:
+      "Currently, we don't provide official certificates for 1:1 sessions. However, the projects you build during mentorship can be added to your portfolio, which is often more valuable to employers than certificates.",
   },
   {
     id: "5",
     question: "How often do you upload new content?",
-    answer: "We upload new content and host webinars regularly. Subscribe to our channel and check the Topmate page for the latest offerings.",
+    answer:
+      "We upload new content and host webinars regularly. Subscribe to our channel and check the Topmate page for the latest offerings.",
   },
 ];

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun, Search } from "lucide-react";
+import { Menu, X, Moon, Sun, Search, Sparkles } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import CommandMenu from "@/components/command-menu";
 import Link from "next/link";
@@ -12,12 +12,13 @@ const navLinks = [
   { name: "About", href: "/about" },
   { name: "Courses", href: "/courses" },
   { name: "YouTube", href: "/youtube" },
-  { name: "Topmate", href: "/topmate" },
   { name: "Blogs", href: "/blogs" },
   { name: "Roadmaps", href: "/roadmaps" },
   { name: "Resources", href: "/resources" },
   { name: "Contact", href: "/contact" },
 ];
+
+const topmateLink = { name: "Topmate", href: "/topmate" };
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,11 +69,23 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
+
+              <Link
+                href={topmateLink.href}
+                className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-primary/30"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {topmateLink.name}
+              </Link>
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
               <button
-                onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true }))}
+                onClick={() =>
+                  document.dispatchEvent(
+                    new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),
+                  )
+                }
                 className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground bg-muted/50 border border-border rounded-lg hover:bg-muted transition-colors"
               >
                 <Search className="w-4 h-4" />
@@ -100,7 +113,11 @@ export default function Navbar() {
               className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors"
               aria-label="Toggle menu"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -126,6 +143,16 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
+
+              <Link
+                href={topmateLink.href}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 mt-2 px-4 py-3 text-base font-semibold rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/25 transition-all hover:shadow-lg"
+              >
+                <Sparkles className="h-4 w-4" />
+                {topmateLink.name}
+              </Link>
+
               <div className="pt-4 border-t border-border">
                 <button
                   onClick={toggleTheme}

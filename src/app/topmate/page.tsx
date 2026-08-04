@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import {
   profile,
@@ -15,15 +15,10 @@ import {
 } from "@/data/topmate";
 import {
   Star,
-  Search,
-  Filter,
   ArrowRight,
   Check,
   Clock,
-  MapPin,
   Play,
-  Share2,
-  HelpCircle,
   ChevronDown,
   ChevronUp,
   MessageCircle,
@@ -31,19 +26,106 @@ import {
   Video,
   Zap,
   Trophy,
-  TrendingUp,
-  Target,
   BookOpen,
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/* -------------------------------------------------------------------------- */
+/* Data normalization                                                         */
+/* -------------------------------------------------------------------------- */
 
+type TabKey = "all" | "call" | "dm" | "digital" | "package";
+
+interface Offering {
+  id: string;
+  tab: Exclude<TabKey, "all">;
+  tabLabel: string;
+  title: string;
+  description: string;
+  poster: string;
+  category?: string;
+  price?: number;
+  originalPrice?: number;
+  rating?: number;
+  duration?: string;
+  badge?: string;
+  url: string;
+}
+
+// NOTE: adjust `raw.url` / `raw.link` / `raw.type` below to match your real field names.
+function toOffering(
+  raw: any,
+  tab: Offering["tab"],
+  tabLabel: string,
+  badgeFallback?: string,
+): Offering {
+  return {
+    id: raw.id,
+    tab,
+    tabLabel,
+    title: raw.title,
+    description: raw.description,
+    poster: raw.poster,
+    category: raw.category,
+    price: raw.price,
+    originalPrice: raw.originalPrice,
+    rating: raw.rating,
+    duration: raw.duration,
+    badge: raw.badge ?? (raw.popular ? "Popular" : badgeFallback),
+    url: raw.url ?? raw.link ?? "#",
+  };
+}
+
+function useOfferings() {
+  return useMemo(() => {
+    const callItems = (services as any[])
+      .filter((s) => s.type !== "dm")
+      .map((s) => toOffering(s, "call", "1:1 Call"));
+
+    const dmItems = (services as any[])
+      .filter((s) => s.type === "dm")
+      .map((s) => toOffering(s, "dm", "Priority DM"));
+
+    const digitalItems = (products as any[]).map((p) =>
+      toOffering(p, "digital", "Digital Products"),
+    );
+
+    const packageItems = (packages as any[]).map((pkg) =>
+      toOffering(pkg, "package", "Packages", "Best Deal"),
+    );
+
+    return [...callItems, ...dmItems, ...digitalItems, ...packageItems];
+  }, []);
+}
+
+const TABS: { key: TabKey; label: string; icon: React.ReactNode }[] = [
+  { key: "all", label: "All", icon: <Zap className="w-4 h-4" /> },
+  { key: "call", label: "1:1 Call", icon: <Video className="w-4 h-4" /> },
+  // {
+  //   key: "dm",
+  //   label: "Priority DM",
+  //   icon: <MessageCircle className="w-4 h-4" />,
+  // },
+  {
+    key: "digital",
+    label: "Digital Products",
+    icon: <BookOpen className="w-4 h-4" />,
+  },
+  { key: "package", label: "Packages", icon: <Trophy className="w-4 h-4" /> },
+];
+
+/* -------------------------------------------------------------------------- */
+/* Hero                                                                       */
+/* -------------------------------------------------------------------------- */
 
 function ProfileHero() {
   return (
-    <section className="pt-20 pb-16 bg-gradient-to-b from-primary/5 to-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden pt-24 pb-20">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -52,66 +134,67 @@ function ProfileHero() {
           className="flex flex-col items-center text-center"
         >
           <motion.div variants={fadeInUp} className="relative mb-6">
+            <div className="absolute inset-0 -m-1.5 rounded-full bg-gradient-to-br from-primary to-primary/40 opacity-60 blur-md" />
             <img
               src="/mohitdecodeprofileimage.jpeg"
               alt={profile.name}
-              className="w-28 h-28 rounded-full border-4 border-border object-cover bg-card"
+              className="relative h-28 w-28 rounded-full border-4 border-background object-cover bg-card shadow-xl"
             />
-            <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 border-2 border-background rounded-full flex items-center justify-center">
-              <Check className="w-4 h-4 text-white" />
+            <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-green-500">
+              <Check className="h-4 w-4 text-white" />
             </div>
           </motion.div>
 
           <motion.h1
             variants={fadeInUp}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2"
+            className="mb-2 text-3xl font-bold sm:text-4xl md:text-5xl"
           >
             {profile.name}
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
-            className="text-lg text-muted-foreground mb-4"
+            className="mb-4 text-lg text-muted-foreground"
           >
             {profile.username}
           </motion.p>
 
           <motion.p
             variants={fadeInUp}
-            className="text-xl text-foreground font-medium mb-6"
+            className="mb-8 max-w-2xl text-xl font-medium text-foreground"
           >
             {profile.headline}
           </motion.p>
 
           <motion.div
             variants={fadeInUp}
-            className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-8"
+            className="mb-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
             {[
               {
                 label: "Bookings",
                 value: `${profile.stats.bookings}+`,
-                icon: <Calendar className="w-4 h-4" />,
+                icon: <Calendar className="h-4 w-4 text-primary" />,
               },
               {
                 label: "Rating",
-                value: `${profile.stats.rating} ★`,
+                value: `${profile.stats.rating}`,
                 icon: (
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                 ),
               },
               {
                 label: "Followers",
                 value: `${(profile.stats.followers / 1000).toFixed(1)}K`,
-                icon: <Users className="w-4 h-4" />,
+                icon: <Users className="h-4 w-4 text-primary" />,
               },
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-xl"
+                className="flex items-center gap-2 rounded-2xl border border-border bg-card/80 px-4 py-2.5 backdrop-blur-sm"
               >
                 {stat.icon}
-                <span className="font-semibold text-lg">{stat.value}</span>
+                <span className="text-lg font-semibold">{stat.value}</span>
                 <span className="text-sm text-muted-foreground">
                   {stat.label}
                 </span>
@@ -121,26 +204,26 @@ function ProfileHero() {
 
           <motion.div
             variants={fadeInUp}
-            className="flex flex-wrap justify-center gap-2 mb-6"
+            className="mb-8 flex flex-wrap justify-center gap-2"
           >
             {profile.badges.map((badge) => (
               <span
                 key={badge}
-                className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20"
+                className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
               >
                 {badge}
               </span>
             ))}
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="flex items-center gap-4">
+          <motion.div variants={fadeInUp}>
             <a
               href={profile.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/30"
             >
-              <Play className="w-5 h-5 fill-white" />
+              <Play className="h-5 w-5 fill-current" />
               Subscribe on YouTube
             </a>
           </motion.div>
@@ -150,6 +233,9 @@ function ProfileHero() {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Shared section header                                                     */
+/* -------------------------------------------------------------------------- */
 
 function SectionHeader({
   title,
@@ -161,319 +247,332 @@ function SectionHeader({
   href?: string;
 }) {
   return (
-    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-      <div>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-          {title}{" "}
-          <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            {subtitle}
-          </span>
-        </h2>
-      </div>
+    <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+        {title}
+        <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          {subtitle}
+        </span>
+      </h2>
       {href && (
         <a
           href={href}
-          className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0"
+          className="inline-flex items-center gap-2 font-semibold text-primary transition-all hover:gap-3"
         >
           View all
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="h-5 w-5" />
         </a>
       )}
     </div>
   );
 }
 
-function ServiceCard({ service }: { service: (typeof services)[0] }) {
+/* -------------------------------------------------------------------------- */
+/* Offering card (used for 1:1 Call / Priority DM / Digital / Packages)      */
+/* -------------------------------------------------------------------------- */
+
+function OfferingCard({ item }: { item: Offering }) {
+  const hasDiscount =
+    item.originalPrice !== undefined &&
+    item.price !== undefined &&
+    item.originalPrice > item.price;
+
   return (
-    <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
-      <div className="relative aspect-video overflow-hidden">
+    <motion.a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileTap={{ scale: 0.98 }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden">
         <img
-          src={service.poster}
-          alt={service.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          src={item.poster}
+          alt={item.title}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        {service.popular && (
-          <div className="absolute top-3 left-3">
-            <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
-              Popular
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+        <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">
+          {item.badge && (
+            <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground shadow-sm">
+              {item.badge}
             </span>
-          </div>
-        )}
-        <div className="absolute bottom-3 left-3 flex items-center gap-2">
-          <span className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-md">
-            {service.category}
-          </span>
-          <span className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-md flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            {service.duration}
+          )}
+          <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+            {item.tabLabel}
           </span>
         </div>
+
+        {item.duration && (
+          <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+            <Clock className="h-3 w-3" />
+            {item.duration}
+          </span>
+        )}
       </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-1">
-          {service.title}
+
+      <div className="flex flex-1 flex-col p-6">
+        {item.category && (
+          <span className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary/80">
+            {item.category}
+          </span>
+        )}
+
+        <h3 className="mb-2 line-clamp-1 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+          {item.title}
         </h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {service.description}
+
+        <p className="mb-5 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+          {item.description}
         </p>
-        {service.bookings && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
-            <TrendingUp className="w-3 h-3" />
-            {service.bookings} bookings
+
+        <div className="flex items-center justify-between border-t border-border pt-4">
+          <div className="flex flex-col gap-1">
+            {item.price !== undefined && (
+              <div className="flex items-baseline gap-2">
+                <span className="text-xl font-bold text-foreground">
+                  ₹{item.price.toLocaleString()}
+                </span>
+                {hasDiscount && (
+                  <span className="text-sm text-muted-foreground line-through">
+                    ₹{item.originalPrice!.toLocaleString()}
+                  </span>
+                )}
+              </div>
+            )}
+            {item.rating !== undefined && (
+              <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                {typeof item.rating === "number"
+                  ? item.rating.toFixed(1)
+                  : item.rating}
+              </div>
+            )}
           </div>
-        )}
-        <div className="flex items-center justify-between pt-4 border-t border-border">
-          <div className="flex items-center gap-1 text-sm font-medium text-primary">
-            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            {service.rating}.0
-          </div>
-          <div className="text-right">
-            <span className="text-xl font-bold text-foreground">
-              ₹{service.price}
-            </span>
-          </div>
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:bg-primary group-hover:text-primary-foreground"
+          >
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
-        <button className="mt-4 w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all hover:scale-[1.02]">
-          Book Session
-        </button>
       </div>
-    </div>
+    </motion.a>
   );
 }
 
-function ServicesSection() {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
-  const categories = [
-    "All",
-    "Career",
-    "Interview",
-    "Frontend",
-    "Full Stack",
-    "Resume",
-  ];
+/* -------------------------------------------------------------------------- */
+/* Tab pills                                                                  */
+/* -------------------------------------------------------------------------- */
 
-  const filtered = useMemo(() => {
-    return services.filter((s) => {
-      const matchesSearch =
-        s.title.toLowerCase().includes(search.toLowerCase()) ||
-        s.category.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = category === "All" || s.category === category;
-      return matchesSearch && matchesCategory;
-    });
-  }, [search, category]);
-
+function TabPills({
+  active,
+  onChange,
+  counts,
+}: {
+  active: TabKey;
+  onChange: (t: TabKey) => void;
+  counts: Record<TabKey, number>;
+}) {
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader title="My " subtitle="Services" href="/topmate" />
-
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search services..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl text-base outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
-            />
-          </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <Filter className="w-4 h-4 text-muted-foreground" />
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
+    <div className="flex flex-wrap items-center gap-2">
+      {TABS.map((tab) => {
+        const isActive = tab.key === active;
+        return (
+          <button
+            key={tab.key}
+            onClick={() => onChange(tab.key)}
+            className={cn(
+              "relative overflow-hidden rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-200",
+              isActive
+                ? "text-primary-foreground"
+                : "border border-border bg-card text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {isActive && (
+              <motion.span
+                layoutId="active-tab-pill"
+                className="absolute inset-0 rounded-full bg-primary"
+                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+              />
+            )}
+            <span className="relative z-10 flex items-center gap-2">
+              {tab.icon}
+              {tab.label}
+              <span
                 className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-all",
-                  category === cat
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:text-foreground border border-border",
+                  "rounded-full px-1.5 py-0.5 text-[10px] font-semibold",
+                  isActive ? "bg-white/20" : "bg-muted",
                 )}
               >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {filtered.length > 0 ? (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filtered.map((service) => (
-              <motion.div key={service.id} variants={fadeInUp}>
-                <ServiceCard service={service} />
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <div className="text-center py-16">
-            <p className="text-lg text-muted-foreground">
-              No services found matching your criteria.
-            </p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function PackageCard({ pkg }: { pkg: (typeof packages)[0] }) {
-  const discountedPrice = Math.round(pkg.price * 0.8);
-
-  return (
-    <div className="group block h-full rounded-2xl border-2 border-primary bg-card overflow-hidden hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 relative">
-      <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-4 py-1 text-xs font-bold rounded-bl-xl">
-        SAVE 20%
-      </div>
-      <div className="p-8">
-        <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-4">
-          {pkg.category}
-        </span>
-        <h3 className="text-2xl font-bold mb-3">{pkg.title}</h3>
-        <p className="text-muted-foreground mb-6 leading-relaxed">
-          {pkg.description}
-        </p>
-
-        <ul className="space-y-3 mb-6">
-          {pkg.agenda.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm">
-              <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-              <span className="text-foreground">{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-baseline gap-3 mb-6">
-          <span className="text-4xl font-bold text-foreground">
-            ₹{pkg.price}
-          </span>
-          <span className="text-lg text-muted-foreground line-through">
-            ₹{pkg.originalPrice}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-          <Clock className="w-4 h-4" />
-          {pkg.duration}
-        </div>
-
-        <button className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all hover:scale-[1.02] shadow-lg shadow-primary/25">
-          Book Package
-        </button>
-      </div>
+                {counts[tab.key]}
+              </span>
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-function PackagesSection() {
+/* -------------------------------------------------------------------------- */
+/* Offerings section (All / 1:1 Call / Priority DM / Digital / Packages)     */
+/* -------------------------------------------------------------------------- */
+
+function OfferingsSection() {
+  const offerings = useOfferings();
+  const [active, setActive] = useState<TabKey>("all");
+
+  const counts = useMemo(() => {
+    const c: Record<TabKey, number> = {
+      all: offerings.length,
+      call: 0,
+      dm: 0,
+      digital: 0,
+      package: 0,
+    };
+    offerings.forEach((o) => {
+      c[o.tab]++;
+    });
+    return c;
+  }, [offerings]);
+
+  const filtered = useMemo(
+    () =>
+      active === "all" ? offerings : offerings.filter((o) => o.tab === active),
+    [offerings, active],
+  );
+
   return (
-    <section className="py-20 bg-background">
+    <section className="bg-muted/30 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader title="Mentorship " subtitle="Packages" />
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="max-w-lg mx-auto"
-        >
-          {packages.map((pkg) => (
-            <motion.div key={pkg.id} variants={fadeInUp}>
-              <PackageCard pkg={pkg} />
+        <SectionHeader title="Explore My " subtitle="Offerings" />
+
+        <div className="mb-10">
+          <TabPills active={active} onChange={setActive} counts={counts} />
+        </div>
+
+        <AnimatePresence mode="wait">
+          {filtered.length > 0 ? (
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filtered.map((item) => (
+                <OfferingCard key={`${item.tab}-${item.id}`} item={item} />
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="py-16 text-center text-muted-foreground"
+            >
+              Nothing here yet — check back soon.
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
 }
 
-function WebinarCard({ webinar }: { webinar: (typeof webinars)[0] }) {
+/* -------------------------------------------------------------------------- */
+/* Webinars (kept as its own section — not part of the 5 required tabs)      */
+/* -------------------------------------------------------------------------- */
+
+function WebinarCard({ webinar }: { webinar: any }) {
   return (
-    <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+    <motion.a
+      variants={fadeInUp}
+      href={webinar.url ?? webinar.link ?? "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileTap={{ scale: 0.98 }}
+      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
+    >
       <div className="relative aspect-video overflow-hidden">
         <img
           src={webinar.poster}
           alt={webinar.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-        <div className="absolute top-3 left-3 flex items-center gap-2">
-          <span className="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full animate-pulse">
+        <div className="absolute left-3 top-3 flex items-center gap-2">
+          <span className="animate-pulse rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
             LIVE
           </span>
-          <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-full">
+          <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
             {webinar.category}
           </span>
         </div>
-        <div className="absolute bottom-3 left-3 flex items-center gap-2 text-white text-sm">
-          <Calendar className="w-4 h-4" />
+        <div className="absolute bottom-3 left-3 flex items-center gap-2 text-sm text-white">
+          <Calendar className="h-4 w-4" />
           {webinar.date}
         </div>
       </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-1">
+
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="mb-2 line-clamp-1 text-lg font-semibold transition-colors group-hover:text-primary">
           {webinar.title}
         </h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+        <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">
           {webinar.description}
         </p>
 
-        <div className="space-y-2 mb-4">
-          <h4 className="text-sm font-semibold">Weekly Breakdown</h4>
-          {webinar.weeklyBreakdown.map((item, i) => (
+        <div className="mb-4 space-y-2">
+          {webinar.weeklyBreakdown.map((item: string, i: number) => (
             <div
               key={i}
               className="flex items-center gap-2 text-xs text-muted-foreground"
             >
-              <Check className="w-3 h-3 text-primary shrink-0" />
+              <Check className="h-3 w-3 shrink-0 text-primary" />
               {item}
             </div>
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-4">
-          {webinar.perks.map((perk, i) => (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {webinar.perks.map((perk: string, i: number) => (
             <span
               key={i}
-              className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md"
+              className="rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground"
             >
               {perk}
             </span>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-border">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">
-              {webinar.duration}
-            </span>
-          </div>
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
+          <span className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            {webinar.duration}
+          </span>
           <span className="text-xl font-bold text-foreground">
             ₹{webinar.price.toLocaleString()}
           </span>
         </div>
-
-        <button className="mt-4 w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all hover:scale-[1.02]">
-          Reserve Seat
-        </button>
       </div>
-    </div>
+    </motion.a>
   );
 }
 
 function WebinarsSection() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="bg-background py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader title="Live " subtitle="Webinars" />
         <motion.div
@@ -481,12 +580,10 @@ function WebinarsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 gap-6 md:grid-cols-2"
         >
-          {webinars.map((webinar) => (
-            <motion.div key={webinar.id} variants={fadeInUp}>
-              <WebinarCard webinar={webinar} />
-            </motion.div>
+          {webinars.map((webinar: any) => (
+            <WebinarCard key={webinar.id} webinar={webinar} />
           ))}
         </motion.div>
       </div>
@@ -494,129 +591,9 @@ function WebinarsSection() {
   );
 }
 
-function ProductCard({ product }: { product: (typeof products)[0] }) {
-  return (
-    <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={product.poster}
-          alt={product.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        <div className="absolute top-3 right-3">
-          <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
-            {product.format}
-          </span>
-        </div>
-        {product.questions && (
-          <div className="absolute bottom-3 left-3">
-            <span className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-md">
-              {product.questions} Q&A
-            </span>
-          </div>
-        )}
-      </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-1">
-          {product.title}
-        </h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {product.description}
-        </p>
-        <div className="flex flex-wrap gap-1 mb-4">
-          {product.topics.slice(0, 3).map((topic) => (
-            <span
-              key={topic}
-              className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md"
-            >
-              {topic}
-            </span>
-          ))}
-          {product.topics.length > 3 && (
-            <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-              +{product.topics.length - 3} more
-            </span>
-          )}
-        </div>
-        <button className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-card text-foreground rounded-xl font-semibold text-sm border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-          {product.format === "PDF" ? "Download" : "Enroll Now"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ProductsSection() {
-  return (
-    <section className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader title="Digital " subtitle="Products" />
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {products.map((product) => (
-            <motion.div key={product.id} variants={fadeInUp}>
-              <ProductCard product={product} />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
-  const [expanded, setExpanded] = useState(false);
-  const isLong = review.text.length > 200;
-
-  return (
-    <motion.div
-      variants={fadeInUp}
-      className="p-6 rounded-2xl border border-border bg-card hover:border-primary/20 transition-all duration-300"
-    >
-      <div className="flex items-center gap-1 mb-3">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-        ))}
-      </div>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-        {expanded
-          ? review.text
-          : `${review.text.slice(0, 200)}${isLong ? "..." : ""}`}
-        {isLong && (
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="text-primary hover:underline ml-1"
-          >
-            {expanded ? "Show less" : "Read more"}
-          </button>
-        )}
-      </p>
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">{review.name}</span>
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1" title="Helpful">
-            <ThumbsUp className="w-3 h-3" />
-            {review.helpful}
-          </span>
-          <span className="flex items-center gap-1" title="Insightful">
-            <Lightbulb className="w-3 h-3" />
-            {review.insightful}
-          </span>
-          <span className="flex items-center gap-1" title="Friendly">
-            <MessageCircle className="w-3 h-3" />
-            {review.friendly}
-          </span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+/* -------------------------------------------------------------------------- */
+/* Reviews                                                                    */
+/* -------------------------------------------------------------------------- */
 
 function ThumbsUp(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -659,9 +636,57 @@ function Lightbulb(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = review.text.length > 200;
+
+  return (
+    <motion.div
+      variants={fadeInUp}
+      className="rounded-3xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg"
+    >
+      <div className="mb-3 flex items-center gap-1">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+        ))}
+      </div>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        {expanded
+          ? review.text
+          : `${review.text.slice(0, 200)}${isLong ? "..." : ""}`}
+        {isLong && (
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="ml-1 text-primary hover:underline"
+          >
+            {expanded ? "Show less" : "Read more"}
+          </button>
+        )}
+      </p>
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">{review.name}</span>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1" title="Helpful">
+            <ThumbsUp className="h-3 w-3" />
+            {review.helpful}
+          </span>
+          <span className="flex items-center gap-1" title="Insightful">
+            <Lightbulb className="h-3 w-3" />
+            {review.insightful}
+          </span>
+          <span className="flex items-center gap-1" title="Friendly">
+            <MessageCircle className="h-3 w-3" />
+            {review.friendly}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function ReviewsSection() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="bg-muted/30 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader title="What People " subtitle="Say" />
         <motion.div
@@ -669,12 +694,10 @@ function ReviewsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 gap-6 md:grid-cols-2"
         >
           {reviews.map((review) => (
-            <motion.div key={review.id} variants={fadeInUp}>
-              <ReviewCard review={review} />
-            </motion.div>
+            <ReviewCard key={review.id} review={review} />
           ))}
         </motion.div>
       </div>
@@ -682,51 +705,60 @@ function ReviewsSection() {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* CTA                                                                        */
+/* -------------------------------------------------------------------------- */
+
 function CTASection() {
   return (
-    <section className="py-20 bg-primary">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="relative overflow-hidden bg-primary py-20">
+      <div className="pointer-events-none absolute -bottom-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+      <div className="relative max-w-4xl mx-auto px-4 text-center sm:px-6 lg:px-8">
         <motion.h2
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4"
+          className="mb-4 text-3xl font-bold text-primary-foreground sm:text-4xl"
         >
           Ready to accelerate your career?
         </motion.h2>
         <motion.p
           variants={fadeInUp}
-          className="text-lg text-primary-foreground/80 mb-8"
+          className="mb-8 text-lg text-primary-foreground/80"
         >
           Book a 1:1 session and get personalized guidance from an industry
           expert.
         </motion.p>
         <motion.a
           variants={fadeInUp}
-          href="/topmate"
-          className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all"
+          href="https://topmate.io/mohitdecodes/2101015?utm_source=public_profile&utm_campaign=mohitdecodes"
+          className="inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 font-semibold text-primary transition-all hover:scale-105 hover:shadow-lg"
         >
           Book a Session
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="h-5 w-5" />
         </motion.a>
       </div>
     </section>
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* FAQ                                                                        */
+/* -------------------------------------------------------------------------- */
+
 function FAQSection() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section className="py-20 bg-background">
+    <section className="bg-background py-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="text-3xl sm:text-4xl font-bold text-center mb-12"
+          className="mb-12 text-center text-3xl font-bold sm:text-4xl"
         >
           Frequently Asked <span className="text-primary">Questions</span>
         </motion.h2>
@@ -735,31 +767,36 @@ function FAQSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="space-y-4"
+          className="space-y-3"
         >
-          {faqs.map((faq, i) => (
+          {faqs.map((faq) => (
             <motion.div key={faq.id} variants={fadeInUp}>
               <button
                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                className="w-full flex items-center justify-between p-5 rounded-xl border border-border bg-card hover:border-primary/20 transition-all text-left"
+                className="flex w-full items-center justify-between rounded-2xl border border-border bg-card p-5 text-left transition-all hover:border-primary/20"
               >
-                <span className="font-medium pr-4">{faq.question}</span>
+                <span className="pr-4 font-medium">{faq.question}</span>
                 {openId === faq.id ? (
-                  <ChevronUp className="w-5 h-5 text-primary shrink-0" />
+                  <ChevronUp className="h-5 w-5 shrink-0 text-primary" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-muted-foreground shrink-0" />
+                  <ChevronDown className="h-5 w-5 shrink-0 text-muted-foreground" />
                 )}
               </button>
-              {openId === faq.id && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  transition={{ duration: 0.3 }}
-                  className="p-5 pt-0 text-muted-foreground leading-relaxed"
-                >
-                  {faq.answer}
-                </motion.div>
-              )}
+              <AnimatePresence initial={false}>
+                {openId === faq.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="p-5 pt-3 leading-relaxed text-muted-foreground">
+                      {faq.answer}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>
@@ -768,21 +805,19 @@ function FAQSection() {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Page                                                                       */
+/* -------------------------------------------------------------------------- */
+
 export default function Topmate() {
   return (
     <div className="min-h-screen">
-      
       <ProfileHero />
-     
-      <ServicesSection />
-      <PackagesSection />
+      <OfferingsSection />
       <WebinarsSection />
-      <ProductsSection />
       <ReviewsSection />
       <CTASection />
       <FAQSection />
-
-    
     </div>
   );
 }
