@@ -32,7 +32,7 @@ export async function GET() {
       );
     }
 
-    const data = await response.json();
+    const data = await safeJson(response);
 
     if (!data.items || data.items.length === 0) {
       return NextResponse.json(
@@ -58,6 +58,17 @@ export async function GET() {
       { error: "Failed to fetch channel data." },
       { status: 500 }
     );
+  }
+}
+
+async function safeJson(response: Response) {
+  const text = await response.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.error("Invalid JSON response:", response.status, text.slice(0, 200));
+    return {};
   }
 }
 

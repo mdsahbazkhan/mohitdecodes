@@ -46,7 +46,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const data = await response.json();
+    const data = await safeJson(response);
 
     if (!data.items || data.items.length === 0) {
       return NextResponse.json({ videos: [] });
@@ -104,6 +104,17 @@ export async function GET(request: Request) {
       { error: "Failed to fetch video data." },
       { status: 500 },
     );
+  }
+}
+
+async function safeJson(response: Response) {
+  const text = await response.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.error("Invalid JSON response:", response.status, text.slice(0, 200));
+    return {};
   }
 }
 

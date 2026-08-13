@@ -28,7 +28,15 @@ async function getYouTubeViews() {
 
     if (!response.ok) return null;
 
-    const data = await response.json();
+    const text = await response.text();
+    if (!text) return null;
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return null;
+    }
 
     if (!data.items || data.items.length === 0) return null;
 
@@ -57,7 +65,15 @@ async function getYouTubeStats() {
 
     if (!response.ok) return null;
 
-    const data = await response.json();
+    const text = await response.text();
+    if (!text) return null;
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return null;
+    }
 
     if (!data.items || data.items.length === 0) return null;
 

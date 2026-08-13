@@ -32,7 +32,7 @@ export async function GET() {
       );
     }
 
-    const channelData = await channelResponse.json();
+    const channelData = await safeJson(channelResponse);
 
     if (!channelData.items || channelData.items.length === 0) {
       return NextResponse.json(
@@ -63,7 +63,7 @@ export async function GET() {
       );
     }
 
-    const playlistData = await playlistResponse.json();
+    const playlistData = await safeJson(playlistResponse);
 
     if (!playlistData.items || playlistData.items.length === 0) {
       return NextResponse.json({ videos: [] });
@@ -94,7 +94,7 @@ export async function GET() {
       );
     }
 
-    const videosData = await videosResponse.json();
+    const videosData = await safeJson(videosResponse);
 
     if (!videosData.items) {
       return NextResponse.json({ videos: [] });
@@ -144,6 +144,17 @@ export async function GET() {
       { error: "Failed to fetch latest videos." },
       { status: 500 }
     );
+  }
+}
+
+async function safeJson(response: Response) {
+  const text = await response.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.error("Invalid JSON response:", response.status, text.slice(0, 200));
+    return {};
   }
 }
 

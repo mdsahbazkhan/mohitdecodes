@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     "full stack development",
   ],
   authors: [{ name: "Mohit" }],
+  icons: {
+    icon: "/mohitdecode_logo.jpeg",
+  },
   openGraph: {
     title: "MohitDecodes - Master Modern Web Development",
     description: "Learn modern web development with practical, project-based tutorials.",
