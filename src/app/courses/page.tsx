@@ -8,10 +8,13 @@ import { ArrowRight, Clock, Users, Star, Search, Filter, X } from "lucide-react"
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
+const MOBILE_PAGE_SIZE = 3;
+
 export default function Courses() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [level, setLevel] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
 
   const filtered = useMemo(() => {
     return courses.filter((course) => {
@@ -26,6 +29,13 @@ export default function Courses() {
       return matchesSearch && matchesCategory && matchesLevel;
     });
   }, [search, category, level]);
+
+  const visibleCourses = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + MOBILE_PAGE_SIZE);
+  };
 
   return (
     <div className="min-h-screen">
@@ -66,12 +76,18 @@ export default function Courses() {
                 type="text"
                 placeholder="Search courses..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setVisibleCount(MOBILE_PAGE_SIZE);
+                }}
                 className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl text-base outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
               />
               {search && (
                 <button
-                  onClick={() => setSearch("")}
+                  onClick={() => {
+                    setSearch("");
+                    setVisibleCount(MOBILE_PAGE_SIZE);
+                  }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   <X className="w-4 h-4" />
@@ -81,7 +97,10 @@ export default function Courses() {
             <div className="flex flex-wrap gap-3">
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  setVisibleCount(MOBILE_PAGE_SIZE);
+                }}
                 className="px-4 py-3 bg-card border border-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
               >
                 {courseCategories.map((cat) => (
@@ -92,7 +111,10 @@ export default function Courses() {
               </select>
               <select
                 value={level}
-                onChange={(e) => setLevel(e.target.value)}
+                onChange={(e) => {
+                  setLevel(e.target.value);
+                  setVisibleCount(MOBILE_PAGE_SIZE);
+                }}
                 className="px-4 py-3 bg-card border border-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
               >
                 {courseLevels.map((lvl) => (
@@ -116,7 +138,7 @@ export default function Courses() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {filtered.map((course, i) => (
+            {visibleCourses.map((course, i) => (
               <motion.div key={course.id} variants={fadeInUp}>
                 <Link
                   href={`/courses/${course.id}`}
@@ -177,6 +199,18 @@ export default function Courses() {
               </motion.div>
             ))}
           </motion.div>
+
+          {hasMore && (
+            <div className="mt-12 text-center lg:hidden">
+              <button
+                onClick={handleLoadMore}
+                className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-base hover:bg-primary/90 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Load More
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
           {filtered.length === 0 && (
             <div className="text-center py-20">
