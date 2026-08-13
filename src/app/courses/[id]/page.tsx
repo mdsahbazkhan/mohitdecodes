@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { PlayCircle, CheckCircle2, ArrowLeft, Share2, Bookmark, Star, Users, Clock } from "lucide-react";
 import Link from "next/link";

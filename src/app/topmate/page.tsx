@@ -307,11 +307,10 @@ function OfferingCard({ item }: { item: Offering }) {
           alt={item.title}
           fill
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          loading="lazy"
-          decoding="async"
-        />
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+           loading="lazy"
+           decoding="async"
+         />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
         <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">
           {item.badge && (
@@ -514,11 +513,10 @@ function WebinarCard({ webinar }: { webinar: Webinar }) {
           alt={webinar.title}
           fill
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          loading="lazy"
-          decoding="async"
-        />
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+           loading="lazy"
+           decoding="async"
+         />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute left-3 top-3 flex items-center gap-2">
           <span className="animate-pulse rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
             LIVE
