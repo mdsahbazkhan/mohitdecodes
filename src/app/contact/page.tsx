@@ -61,12 +61,23 @@ export default function Contact() {
     e.preventDefault();
     setStatus("loading");
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("https://formspree.io/f/meajkdgb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (formData.name && formData.email && formData.message) {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } else {
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
       setStatus("error");
     }
   };
