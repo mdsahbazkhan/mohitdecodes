@@ -235,7 +235,7 @@ export default function Contact() {
                   {
                     icon: Mail,
                     label: "Email",
-                    value: "hello@mohitdecodes.com",
+                    value: "info@mohitdecodes.in",
                   },
                   {
                     icon: MapPin,
