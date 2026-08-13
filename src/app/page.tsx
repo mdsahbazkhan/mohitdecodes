@@ -8,7 +8,6 @@ import TopmatePreview from "@/components/sections/topmate-preview";
 import Testimonials from "@/components/sections/testimonials";
 import Newsletter from "@/components/sections/newsletter";
 import FAQ from "@/components/sections/faq";
-import TrustedBy from "@/components/sections/trusted-by";
 import { formatCount } from "@/lib/youtube";
 
 async function getYouTubeViews() {
@@ -67,10 +66,18 @@ async function getYouTubeStats() {
     const views = formatCount(statistics.viewCount);
 
     return [
-      { label: "YouTube Subscribers", value: subscribers + "+", color: "text-red-500" },
+      {
+        label: "YouTube Subscribers",
+        value: subscribers + "+",
+        color: "text-red-500",
+      },
       { label: "Total Views", value: views + "+", color: "text-blue-500" },
       { label: "Free Courses", value: "25+", color: "text-green-500" },
-      { label: "Lines of Code Taught", value: "10M+", color: "text-purple-500" },
+      {
+        label: "Lines of Code Taught",
+        value: "10M+",
+        color: "text-purple-500",
+      },
     ];
   } catch {
     return null;

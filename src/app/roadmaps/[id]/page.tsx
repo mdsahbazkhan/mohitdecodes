@@ -7,7 +7,6 @@ import { roadmaps } from "@/data/roadmaps";
 import {
   ArrowLeft,
   CheckCircle2,
-  ExternalLink,
   BookOpen,
 } from "lucide-react";
 import Link from "next/link";

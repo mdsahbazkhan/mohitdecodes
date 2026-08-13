@@ -1,20 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { courses, courseCategories, courseLevels } from "@/data/courses";
-import { ArrowRight, Clock, Users, Star, Search, Filter, X } from "lucide-react";
+import { ArrowRight, Clock, Users, Star, Search, X } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
-const MOBILE_PAGE_SIZE = 3;
+const PAGE_SIZE = 6;
 
 export default function Courses() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [level, setLevel] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filtered = useMemo(() => {
     return courses.filter((course) => {
@@ -34,7 +34,7 @@ export default function Courses() {
   const hasMore = visibleCount < filtered.length;
 
   const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + MOBILE_PAGE_SIZE);
+    setVisibleCount((prev) => prev + PAGE_SIZE);
   };
 
   return (
@@ -76,17 +76,17 @@ export default function Courses() {
                 type="text"
                 placeholder="Search courses..."
                 value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setVisibleCount(MOBILE_PAGE_SIZE);
-                }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setVisibleCount(PAGE_SIZE);
+              }}
                 className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl text-base outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
               />
               {search && (
                 <button
                   onClick={() => {
                     setSearch("");
-                    setVisibleCount(MOBILE_PAGE_SIZE);
+                    setVisibleCount(PAGE_SIZE);
                   }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
@@ -99,7 +99,7 @@ export default function Courses() {
                 value={category}
                 onChange={(e) => {
                   setCategory(e.target.value);
-                  setVisibleCount(MOBILE_PAGE_SIZE);
+                  setVisibleCount(PAGE_SIZE);
                 }}
                 className="px-4 py-3 bg-card border border-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
               >
@@ -113,7 +113,7 @@ export default function Courses() {
                 value={level}
                 onChange={(e) => {
                   setLevel(e.target.value);
-                  setVisibleCount(MOBILE_PAGE_SIZE);
+                  setVisibleCount(PAGE_SIZE);
                 }}
                 className="px-4 py-3 bg-card border border-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
               >
@@ -138,18 +138,19 @@ export default function Courses() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {visibleCourses.map((course, i) => (
+            {visibleCourses.map((course) => (
               <motion.div key={course.id} variants={fadeInUp}>
                 <Link
                   href={`/courses/${course.id}`}
                   className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
                 >
                   <div className="relative aspect-video overflow-hidden">
-                    <img
-                      src={course.thumbnail}
-                      alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <Image
+                    src={course.thumbnail}
+                    alt={course.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                     <div className="absolute top-3 left-3">
                       <span className="px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full">
                         {course.level}
@@ -201,7 +202,7 @@ export default function Courses() {
           </motion.div>
 
           {hasMore && (
-            <div className="mt-12 text-center lg:hidden">
+            <div className="mt-12 text-center">
               <button
                 onClick={handleLoadMore}
                 className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-base hover:bg-primary/90 transition-all hover:scale-[1.02] active:scale-[0.98]"

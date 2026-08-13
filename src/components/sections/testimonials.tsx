@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -45,10 +46,12 @@ export default function Testimonials() {
                   ))}
                 </div>
                 <div className="flex items-center gap-3">
-                  <img
+                  <Image
                     src={testimonial.avatar}
                     alt={testimonial.name}
-                    className="w-10 h-10 rounded-full bg-muted"
+                    width={40}
+                    height={40}
+                    className="rounded-full bg-muted"
                   />
                   <div>
                     <div className="font-semibold text-sm">{testimonial.name}</div>

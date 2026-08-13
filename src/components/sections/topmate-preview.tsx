@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { services } from "@/data/topmate";
@@ -53,10 +54,11 @@ export default function TopmatePreview() {
             <motion.div key={service.id} variants={fadeInUp}>
               <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
                 <div className="relative aspect-video overflow-hidden">
-                  <img
+                  <Image
                     src={service.poster}
                     alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {service.popular && (
                     <div className="absolute top-3 right-3">

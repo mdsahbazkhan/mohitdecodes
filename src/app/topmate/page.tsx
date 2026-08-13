@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -156,9 +157,11 @@ function ProfileHero() {
         >
           <motion.div variants={fadeInUp} className="relative mb-6">
             <div className="absolute inset-0 -m-1.5 rounded-full bg-gradient-to-br from-primary to-primary/40 opacity-60 blur-md" />
-            <img
+            <Image
               src="/mohitdecodeprofileimage.jpeg"
               alt={profile.name}
+              width={112}
+              height={112}
               className="relative h-28 w-28 rounded-full border-4 border-background object-cover bg-card shadow-xl"
             />
             <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-green-500">
@@ -299,12 +302,14 @@ function OfferingCard({ item }: { item: Offering }) {
       className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
-        <img
+        <Image
           src={item.poster}
           alt={item.title}
+          fill
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
@@ -504,12 +509,14 @@ function WebinarCard({ webinar }: { webinar: Webinar }) {
       className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
     >
       <div className="relative aspect-video overflow-hidden">
-        <img
+        <Image
           src={webinar.poster}
           alt={webinar.title}
+          fill
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute left-3 top-3 flex items-center gap-2">

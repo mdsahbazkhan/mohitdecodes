@@ -22,7 +22,7 @@ interface YouTubeClientProps {
   playlists: Playlist[];
 }
 
-const MOBILE_PAGE_SIZE = 3;
+const PAGE_SIZE = 6;
 
 export default function YouTubeClient({
   videos,
@@ -31,7 +31,7 @@ export default function YouTubeClient({
 }: YouTubeClientProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filtered = useMemo(() => {
     return videos.filter((video) => {
@@ -48,7 +48,7 @@ export default function YouTubeClient({
   const hasMore = visibleCount < filtered.length;
 
   const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + MOBILE_PAGE_SIZE);
+    setVisibleCount((prev) => prev + PAGE_SIZE);
   };
 
   return (
@@ -93,17 +93,17 @@ export default function YouTubeClient({
                 type="text"
                 placeholder="Search videos..."
                 value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setVisibleCount(MOBILE_PAGE_SIZE);
-                }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setVisibleCount(PAGE_SIZE);
+              }}
                 className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl text-base outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
               />
               {search && (
                 <button
                   onClick={() => {
                     setSearch("");
-                    setVisibleCount(MOBILE_PAGE_SIZE);
+                    setVisibleCount(PAGE_SIZE);
                   }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
@@ -119,7 +119,7 @@ export default function YouTubeClient({
                 key={cat}
                 onClick={() => {
                   setCategory(cat);
-                  setVisibleCount(MOBILE_PAGE_SIZE);
+                  setVisibleCount(PAGE_SIZE);
                 }}
                 className={cn(
                   "px-4 py-2 rounded-full text-sm font-medium transition-all",
@@ -185,7 +185,7 @@ export default function YouTubeClient({
           </motion.div>
 
           {hasMore && (
-            <div className="mt-12 text-center lg:hidden">
+            <div className="mt-12 text-center">
               <button
                 onClick={handleLoadMore}
                 className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-base hover:bg-primary/90 transition-all hover:scale-[1.02] active:scale-[0.98]"

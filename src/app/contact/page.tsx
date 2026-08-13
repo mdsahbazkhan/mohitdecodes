@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { Mail, MapPin, Send } from "lucide-react";
-import Icon from "lucide-react";
 import {
   FaXTwitter,
   FaGithub,
@@ -24,38 +23,6 @@ export default function Contact() {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
-  const socialLinks = [
-    {
-      icon: FaYoutube,
-      href: "https://youtube.com/@mohitdecodes",
-      label: "YouTube",
-    },
-    {
-      icon: FaXTwitter,
-      href: "https://twitter.com/mohitdecodes",
-      label: "Twitter",
-    },
-    {
-      icon: FaGithub,
-      href: "https://github.com/mohitdjcet",
-      label: "GitHub",
-    },
-    {
-      icon: FaLinkedin,
-      href: "https://linkedin.com/in/mohitdecodes",
-      label: "LinkedIn",
-    },
-    {
-      icon: FaInstagram,
-      href: "https://instagram.com/mohitdecodes",
-      label: "Instagram",
-    },
-    {
-      icon: FaFacebook,
-      href: "https://facebook.com/mohitdecode",
-      label: "Facebook",
-    },
-  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -253,7 +220,7 @@ export default function Contact() {
                     label: "Location",
                     value: "India (Remote Worldwide)",
                   },
-                ].map((item, i) => (
+                ].map((item) => (
                   <motion.div
                     key={item.label}
                     variants={fadeInUp}

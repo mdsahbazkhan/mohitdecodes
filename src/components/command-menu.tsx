@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,12 +17,12 @@ export default function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
   const isControlled = open !== undefined;
   const isOpen = isControlled ? open : internalOpen;
 
-  const handleOpenChange = (newOpen: boolean) => {
+  const handleOpenChange = useCallback((newOpen: boolean) => {
     if (!isControlled) {
       setInternalOpen(newOpen);
     }
     onOpenChange?.(newOpen);
-  };
+  }, [isControlled, onOpenChange]);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { resources, resourceTypes, resourceCategories } from "@/data/resources";
 import { Search, X, Download, FileText, BookOpen, HelpCircle, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const typeIcons = {
   cheatsheet: FileText,
@@ -126,7 +125,7 @@ export default function Resources() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {filtered.map((resource, i) => {
+            {filtered.map((resource) => {
               const Icon = typeIcons[resource.type];
               return (
                 <motion.div key={resource.id} variants={fadeInUp}>

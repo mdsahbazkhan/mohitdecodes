@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
@@ -61,10 +62,12 @@ export default function BlogPage() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <img
+                  <Image
                     src={blog.author.avatar}
                     alt={blog.author.name}
-                    className="w-10 h-10 rounded-full bg-muted"
+                    width={40}
+                    height={40}
+                    className="rounded-full bg-muted"
                   />
                   <div>
                     <div className="font-semibold">{blog.author.name}</div>
@@ -99,10 +102,12 @@ export default function BlogPage() {
 
             <motion.div variants={fadeInUp}>
               <div className="relative aspect-video rounded-2xl overflow-hidden mb-12">
-                <img
+                <Image
                   src={blog.coverImage}
                   alt={blog.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               </div>
             </motion.div>

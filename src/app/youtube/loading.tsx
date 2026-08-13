@@ -1,4 +1,4 @@
-import { CourseCardSkeleton } from "@/components/skeletons/course-card-skeleton";
+import { YouTubeCardSkeleton } from "@/components/skeletons/youtube-card-skeleton";
 
 export default function Loading() {
   return (
@@ -15,9 +15,17 @@ export default function Loading() {
 
       <section className="py-12 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-10 w-full max-w-xl bg-muted rounded-xl animate-pulse mb-8" />
+          
+          <div className="flex flex-wrap gap-2 mb-8">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-8 w-20 bg-muted rounded-full animate-pulse" />
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <CourseCardSkeleton key={i} />
+              <YouTubeCardSkeleton key={i} />
             ))}
           </div>
         </div>

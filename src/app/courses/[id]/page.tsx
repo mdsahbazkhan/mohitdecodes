@@ -1,21 +1,13 @@
 "use client";
 
+import Image from "next/image";
+import { PlayCircle, CheckCircle2, ArrowLeft, Share2, Bookmark, Star, Users, Clock } from "lucide-react";
+import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
+import { courses } from "@/data/courses";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import { courses } from "@/data/courses";
-import {
-  Clock,
-  Users,
-  Star,
-  PlayCircle,
-  CheckCircle2,
-  ArrowLeft,
-  Share2,
-  Bookmark,
-} from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Metadata } from "next";
 
 export default function CoursePage() {
   const { id } = useParams();
@@ -124,8 +116,8 @@ export default function CoursePage() {
                       "Deploy applications to production",
                       "Work with modern tools and frameworks",
                       "Debug and optimize your code",
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-3">
+                    ].map((item) => (
+                      <div key={item} className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-muted-foreground">
                           {item}
@@ -164,9 +156,9 @@ export default function CoursePage() {
                         lessons: 5,
                         duration: "1h",
                       },
-                    ].map((section, i) => (
+                    ].map((section) => (
                       <div
-                        key={i}
+                        key={section.title}
                         className="p-4 rounded-xl border border-border bg-card hover:border-primary/20 transition-colors"
                       >
                         <div className="flex items-center justify-between">
@@ -193,10 +185,12 @@ export default function CoursePage() {
                 >
                   <div className="rounded-2xl border border-border bg-card overflow-hidden">
                     <div className="relative aspect-video">
-                      <img
+                      <Image
                         src={course.thumbnail}
                         alt={course.title}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        priority
                       />
                       <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
                         <PlayCircle className="w-16 h-16 text-white" />

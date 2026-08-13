@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Heart } from "lucide-react";
-import Icon from "lucide-react";
 import {
   FaXTwitter,
   FaGithub,
@@ -76,10 +76,12 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <img
+              <Image
                 src="/mohitdecode_logo.jpeg"
                 alt="MohitDecodes logo"
-                className="w-8 h-8 rounded-lg object-cover"
+                width={32}
+                height={32}
+                className="rounded-lg object-cover"
               />
               <span className="font-display font-bold text-xl tracking-tight">
                 MohitDecodes

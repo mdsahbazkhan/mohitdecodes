@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { blogs, blogCategories } from "@/data/blogs";
-import { Search, X, Calendar, Clock, User, ArrowRight } from "lucide-react";
+import { Search, X, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -101,7 +101,7 @@ export default function Blogs() {
             variants={staggerContainer}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {filtered.map((blog, i) => (
+            {filtered.map((blog) => (
               <motion.div key={blog.id} variants={fadeInUp}>
                 <Link
                   href={`/blogs/${blog.id}`}
