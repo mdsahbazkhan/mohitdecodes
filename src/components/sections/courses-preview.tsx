@@ -10,7 +10,7 @@ export default function CoursesPreview() {
   const featured = courses.filter((c) => c.featured).slice(0, 3);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -33,10 +33,10 @@ export default function CoursesPreview() {
           <motion.div variants={fadeInUp}>
             <Link
               href="/courses"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0"
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0 group"
             >
               View all courses
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </motion.div>
         </motion.div>
@@ -52,7 +52,7 @@ export default function CoursesPreview() {
             <motion.div key={course.id} variants={fadeInUp}>
               <Link
                 href={`/courses/${course.id}`}
-                className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="relative aspect-video overflow-hidden">
                   <img

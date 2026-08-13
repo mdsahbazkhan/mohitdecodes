@@ -1,16 +1,16 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { faqs } from "@/data/home";
+import { ChevronDown, HelpCircle } from "lucide-react";
 import { useState } from "react";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 bg-muted/30">
+    <section className="py-24 bg-muted/30 section-glow">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -36,17 +36,17 @@ export default function FAQ() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="space-y-4"
+          className="space-y-3"
         >
           {faqs.map((faq, index) => (
             <motion.div
               key={faq.id}
               variants={fadeInUp}
-              className="rounded-xl border border-border bg-card overflow-hidden"
+              className="rounded-xl border border-border bg-card overflow-hidden hover:border-primary/10 transition-colors duration-200"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-accent/50 transition-colors"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-accent/30 transition-colors"
               >
                 <span className="font-semibold text-base pr-4">{faq.question}</span>
                 <motion.div

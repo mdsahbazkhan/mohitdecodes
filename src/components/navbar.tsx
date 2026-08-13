@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun, Search, Sparkles } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import CommandMenu from "@/components/command-menu";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -24,6 +26,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,19 +63,34 @@ export default function Navbar() {
             </Link>
 
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-all duration-200"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={cn(
+                      "relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                    )}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="navbar-indicator"
+                        className="absolute inset-0 bg-accent/80 rounded-lg"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{link.name}</span>
+                  </Link>
+                );
+              })}
 
               <Link
                 href={topmateLink.href}
-                className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-primary/30"
+                className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-primary/30 active:scale-95"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 {topmateLink.name}
@@ -133,16 +151,24 @@ export default function Navbar() {
             className="fixed top-16 left-0 right-0 z-40 bg-background/95 backdrop-blur-xl border-b border-border lg:hidden overflow-hidden"
           >
             <div className="px-4 py-4 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block px-4 py-3 text-base font-medium text-foreground hover:bg-accent/50 rounded-xl transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "block px-4 py-3 text-base font-medium rounded-xl transition-colors",
+                      isActive
+                        ? "bg-accent/80 text-foreground"
+                        : "text-foreground hover:bg-accent/50"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
 
               <Link
                 href={topmateLink.href}

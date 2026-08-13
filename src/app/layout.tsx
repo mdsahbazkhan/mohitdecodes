@@ -57,6 +57,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+        suppressHydrationWarning
       >
         <ThemeProvider defaultTheme="system" storageKey="mohitdecodes-ui-theme">
           <div className="flex flex-col min-h-screen">

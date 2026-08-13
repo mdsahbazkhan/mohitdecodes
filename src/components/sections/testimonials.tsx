@@ -7,7 +7,7 @@ import { testimonials } from "@/data/home";
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -36,7 +36,7 @@ export default function Testimonials() {
         >
           {testimonials.map((testimonial) => (
             <motion.div key={testimonial.id} variants={fadeInUp}>
-              <div className="h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+              <div className="h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
                 <Quote className="w-8 h-8 text-primary/20 mb-4" />
                 <p className="text-foreground leading-relaxed mb-6">{testimonial.content}</p>
                 <div className="flex items-center gap-1 mb-4">

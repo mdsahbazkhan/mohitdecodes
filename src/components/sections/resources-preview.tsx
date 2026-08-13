@@ -18,7 +18,7 @@ export default function ResourcesPreview() {
   const featured = resources.filter((r) => r.featured).slice(0, 4);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -41,10 +41,10 @@ export default function ResourcesPreview() {
           <motion.div variants={fadeInUp}>
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0"
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0 group"
             >
               View all resources
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </motion.div>
         </motion.div>
@@ -62,7 +62,7 @@ export default function ResourcesPreview() {
               <motion.div key={resource.id} variants={fadeInUp}>
                 <Link
                   href={resource.downloadUrl || "/resources"}
-                  className="group block h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                  className="group block h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="w-12 h-12 mb-4 bg-primary/5 border border-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-6 h-6 text-primary" />

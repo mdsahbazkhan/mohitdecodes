@@ -43,8 +43,11 @@ export default function YouTubeClient({
 
   return (
     <div className="min-h-screen">
-      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -123,7 +126,7 @@ export default function YouTubeClient({
                   href={video.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                  className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <img
@@ -182,8 +185,8 @@ export default function YouTubeClient({
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="group block rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl transition-all duration-300"
+                  transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="group block rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="relative aspect-video">
                     <img

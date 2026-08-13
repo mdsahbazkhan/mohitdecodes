@@ -10,7 +10,7 @@ export default function TopmatePreview() {
   const featured = services.slice(0, 4);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -34,10 +34,10 @@ export default function TopmatePreview() {
           <motion.div variants={fadeInUp}>
             <Link
               href="/topmate"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0"
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all mt-4 md:mt-0 group"
             >
               View all
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </motion.div>
         </motion.div>
@@ -51,7 +51,7 @@ export default function TopmatePreview() {
         >
           {featured.map((service) => (
             <motion.div key={service.id} variants={fadeInUp}>
-              <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+              <div className="group block h-full rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
                 <div className="relative aspect-video overflow-hidden">
                   <img
                     src={service.poster}

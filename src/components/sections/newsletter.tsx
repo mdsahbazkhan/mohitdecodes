@@ -24,7 +24,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -52,10 +52,14 @@ export default function Newsletter() {
 
           <motion.div variants={fadeInUp}>
             {status === "success" ? (
-              <div className="flex items-center justify-center gap-2 text-green-500">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center justify-center gap-2 text-green-500"
+              >
                 <CheckCircle className="w-6 h-6" />
                 <span className="font-medium">Thanks for subscribing!</span>
-              </div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
@@ -72,7 +76,7 @@ export default function Newsletter() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-base hover:bg-primary/90 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-base hover:bg-primary/90 transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
                 >
                   {status === "loading" ? "Subscribing..." : "Subscribe"}
                   <ArrowRight className="w-5 h-5" />

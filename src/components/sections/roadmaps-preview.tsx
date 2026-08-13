@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function RoadmapsPreview() {
   return (
-    <section className="py-24 bg-muted/30 border-y border-border">
+    <section className="py-24 bg-muted/30 border-y border-border section-glow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -39,7 +39,7 @@ export default function RoadmapsPreview() {
             <motion.div key={roadmap.id} variants={fadeInUp}>
               <Link
                 href={`/roadmaps/${roadmap.id}`}
-                className="group block h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                className="group block h-full p-6 rounded-2xl border border-border bg-card hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className="text-4xl group-hover:scale-110 transition-transform duration-300">
@@ -59,9 +59,9 @@ export default function RoadmapsPreview() {
                   <span className="text-sm text-muted-foreground">
                     {roadmap.steps.length} steps
                   </span>
-                  <span className="text-sm font-medium text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-sm font-medium text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     View roadmap
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </span>
                 </div>
               </Link>

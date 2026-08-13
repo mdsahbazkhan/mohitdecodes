@@ -19,14 +19,14 @@ export default function FeatureCard({ feature, index }: FeatureCardProps) {
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 24 },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { delay: index * 0.1, duration: 0.5 },
+          transition: { delay: index * 0.08, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
         },
       }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -6 }}
       className="group relative"
     >
       <Link href={feature.href} className="block h-full">
@@ -52,7 +52,7 @@ export default function FeatureCard({ feature, index }: FeatureCardProps) {
             </p>
             <div className="flex items-center gap-1 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Learn more
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </div>
           </div>
         </div>
