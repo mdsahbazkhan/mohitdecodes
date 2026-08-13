@@ -13,7 +13,11 @@ const fadeInUp: Variants = {
   }),
 };
 
-export default function Hero() {
+interface HeroProps {
+  youtubeViews?: string;
+}
+
+export default function Hero({ youtubeViews }: HeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       <div className="absolute inset-0 grid-background opacity-40" />
@@ -85,7 +89,7 @@ export default function Hero() {
             { icon: BookOpen, label: "Free Courses", value: "25+" },
             { icon: Users, label: "Students", value: "500K+" },
             { icon: Zap, label: "Projects", value: "100+" },
-            { icon: Sparkles, label: "YouTube", value: "50M+ views" },
+            { icon: Sparkles, label: "YouTube", value: youtubeViews || "50M+ views" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}

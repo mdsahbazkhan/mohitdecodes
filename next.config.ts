@@ -5,7 +5,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "yt3.ggpht.com",
+      },
+      {
+        protocol: "https",
+        hostname: "yt3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
       },
       {
         protocol: "https",
