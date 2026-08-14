@@ -1,12 +1,8 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Play, ArrowRight, Home } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "404 - Page Not Found | MohitDecodes",
-  description: "The page you are looking for does not exist.",
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
