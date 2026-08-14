@@ -1,7 +1,8 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import { notFound, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { blogs } from "@/data/blogs";
@@ -13,15 +14,25 @@ import {
   Tag,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function BlogPage() {
-  const { id } = useParams();
-  const blog = blogs.find((b) => b.id === id);
+  const params = useParams();
+  const idFromParams = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+  const blog = useMemo(() => blogs.find((b) => b.id === idFromParams), [idFromParams]);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!blog) {
-    notFound(); 
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">404</h1>
+          <p className="text-muted-foreground mb-8">Blog post not found</p>
+          <Link href="/blogs" className="text-primary hover:underline">
+            Back to Blogs
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -1,22 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { PlayCircle, CheckCircle2, ArrowLeft, Share2, Bookmark, Star, Users, Clock } from "lucide-react";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { courses } from "@/data/courses";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import { Metadata } from "next";
 
 export default function CoursePage() {
-  const { id } = useParams();
-  const course = courses.find((c) => c.id === id);
+  const params = useParams();
+  const idFromParams = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+  const course = useMemo(() => courses.find((c) => c.id === idFromParams), [idFromParams]);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!course) {
-    notFound();
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">404</h1>
+          <p className="text-muted-foreground mb-8">Course not found</p>
+          <Link href="/courses" className="text-primary hover:underline">
+            Back to Courses
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -193,7 +203,7 @@ export default function CoursePage() {
                         className="object-cover"
                         priority
                       />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                         <PlayCircle className="w-16 h-16 text-white" />
                       </div>
                     </div>
