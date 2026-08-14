@@ -2,111 +2,6 @@ import { NextResponse } from "next/server";
 
 const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
 
-export async function GET(request: Request) {
-  try {
-    const apiKey = process.env.YOUTUBE_API_KEY;
-
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: "YouTube API key is not configured." },
-        { status: 500 },
-      );
-    }
-
-    const { searchParams } = new URL(request.url);
-    const ids = searchParams.get("ids");
-
-    if (!ids || ids.length === 0) {
-      return NextResponse.json(
-        { error: "Missing video IDs." },
-        { status: 400 },
-      );
-    }
-
-    const videoIdArray = ids
-      .split(",")
-      .map((id) => id.trim())
-      .filter(Boolean);
-
-    const url = new URL(`${YOUTUBE_API_BASE}/videos`);
-    url.searchParams.set("part", "snippet,contentDetails,statistics");
-    url.searchParams.set("id", videoIdArray.join(","));
-    url.searchParams.set("key", apiKey);
-
-    const response = await fetch(url.toString(), {
-      next: { revalidate: 1800 },
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("YouTube API error response:", response.status, errorText);
-      return NextResponse.json(
-        { error: `YouTube API error: ${response.status}` },
-        { status: response.status },
-      );
-    }
-
-    const data = await safeJson(response);
-
-    if (!data.items || data.items.length === 0) {
-      return NextResponse.json({ videos: [] });
-    }
-
-    const videos = data.items.map((item: Record<string, unknown>) => {
-      const snippet = item.snippet as {
-        title: string;
-        description: string;
-        publishedAt: string;
-        channelTitle: string;
-        thumbnails: Record<string, { url: string }>;
-      };
-      const statistics = item.statistics as {
-        viewCount: string;
-        likeCount: string;
-        commentCount: string;
-      };
-      const contentDetails = item.contentDetails as {
-        duration: string;
-        liveBroadcastContent: string;
-      };
-
-      const thumbnail =
-        snippet.thumbnails?.maxresdefault?.url ||
-        snippet.thumbnails?.high?.url ||
-        snippet.thumbnails?.medium?.url ||
-        snippet.thumbnails?.default?.url;
-
-      const duration = formatDuration(contentDetails.duration);
-
-      return {
-        id: item.id as string,
-        title: snippet.title,
-        description: snippet.description,
-        thumbnail,
-        publishedAt: formatDate(snippet.publishedAt),
-        channelTitle: snippet.channelTitle,
-        duration,
-        views: formatCount(statistics.viewCount) + " views",
-        likes: formatCount(statistics.likeCount) + " likes",
-        comments: formatCount(statistics.commentCount) + " comments",
-        viewCount: statistics.viewCount,
-        likeCount: statistics.likeCount,
-        commentCount: statistics.commentCount,
-        liveBroadcastContent: contentDetails.liveBroadcastContent,
-        url: `https://www.youtube.com/watch?v=${item.id}`,
-      };
-    });
-
-    return NextResponse.json({ videos });
-  } catch (error) {
-    console.error("Failed to fetch YouTube videos:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch video data." },
-      { status: 500 },
-    );
-  }
-}
-
 async function safeJson(response: Response) {
   const text = await response.text();
   if (!text) return {};
@@ -154,8 +49,119 @@ function formatDuration(isoDuration?: string): string {
 function formatDate(isoDate?: string): string {
   if (!isoDate) return "";
   const date = new Date(isoDate);
+  if (isNaN(date.getTime())) return "";
   const year = date.getUTCFullYear();
   const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
   const day = date.getUTCDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+export async function GET(request: Request) {
+  try {
+    const apiKey = process.env.YOUTUBE_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "YouTube API key is not configured." },
+        { status: 500 }
+      );
+    }
+
+    const { searchParams } = new URL(request.url);
+    const ids = searchParams.get("ids");
+
+    if (!ids || ids.length === 0) {
+      return NextResponse.json(
+        { error: "Missing video IDs." },
+        { status: 400 }
+      );
+    }
+
+    const videoIdArray = ids
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean);
+
+    if (videoIdArray.length === 0) {
+      return NextResponse.json({ videos: [] });
+    }
+
+    const url = new URL(`${YOUTUBE_API_BASE}/videos`);
+    url.searchParams.set("part", "snippet,contentDetails,statistics");
+    url.searchParams.set("id", videoIdArray.join(","));
+    url.searchParams.set("key", apiKey);
+
+    const response = await fetch(url.toString(), {
+      next: { revalidate: 1800 },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("YouTube API error response:", response.status, errorText);
+      return NextResponse.json(
+        { error: `YouTube API error: ${response.status}` },
+        { status: response.status }
+      );
+    }
+
+    const data = await safeJson(response);
+
+    if (!data.items || !Array.isArray(data.items) || data.items.length === 0) {
+      return NextResponse.json({ videos: [] });
+    }
+
+    const videos = data.items.map((item: Record<string, unknown>) => {
+      const snippet = (item.snippet || {}) as {
+        title?: string;
+        description?: string;
+        publishedAt?: string;
+        channelTitle?: string;
+        thumbnails?: Record<string, { url?: string }>;
+      };
+      const statistics = (item.statistics || {}) as {
+        viewCount?: string;
+        likeCount?: string;
+        commentCount?: string;
+      };
+      const contentDetails = (item.contentDetails || {}) as {
+        duration?: string;
+        liveBroadcastContent?: string;
+      };
+
+      const thumbnail =
+        snippet.thumbnails?.maxresdefault?.url ||
+        snippet.thumbnails?.high?.url ||
+        snippet.thumbnails?.medium?.url ||
+        snippet.thumbnails?.default?.url ||
+        "";
+
+      const duration = formatDuration(contentDetails.duration);
+
+      return {
+        id: item.id as string,
+        title: snippet.title || "Untitled",
+        description: snippet.description || "",
+        thumbnail,
+        publishedAt: formatDate(snippet.publishedAt),
+        channelTitle: snippet.channelTitle || "Unknown Channel",
+        duration,
+        views: formatCount(statistics.viewCount) + " views",
+        likes: formatCount(statistics.likeCount) + " likes",
+        comments: formatCount(statistics.commentCount) + " comments",
+        viewCount: statistics.viewCount || "0",
+        likeCount: statistics.likeCount || "0",
+        commentCount: statistics.commentCount || "0",
+        liveBroadcastContent: contentDetails.liveBroadcastContent || "none",
+        url: `https://www.youtube.com/watch?v=${item.id}`,
+      };
+    });
+
+    return NextResponse.json({ videos });
+  } catch (error) {
+    console.error("Failed to fetch YouTube videos:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch video data." },
+      { status: 500 }
+    );
+  }
 }

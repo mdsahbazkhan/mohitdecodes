@@ -11,8 +11,8 @@ import { staggerContainer, fadeInUp } from "@/lib/animations";
 
 export default function CoursePage() {
   const params = useParams();
-  const idFromParams = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
-  const course = useMemo(() => courses.find((c) => c.id === idFromParams), [idFromParams]);
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+  const course = useMemo(() => courses.find((c) => c.id === id), [id]);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!course) {

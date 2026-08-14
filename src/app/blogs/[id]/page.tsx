@@ -17,8 +17,8 @@ import Link from "next/link";
 
 export default function BlogPage() {
   const params = useParams();
-  const idFromParams = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
-  const blog = useMemo(() => blogs.find((b) => b.id === idFromParams), [idFromParams]);
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+  const blog = useMemo(() => blogs.find((b) => b.id === id), [id]);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (!blog) {

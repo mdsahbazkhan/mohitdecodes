@@ -2,6 +2,33 @@ import { NextResponse } from "next/server";
 
 const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
 
+async function safeJson(response: Response) {
+  const text = await response.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.error("Invalid JSON response:", response.status, text.slice(0, 200));
+    return {};
+  }
+}
+
+function formatCount(value?: string): string {
+  if (!value) return "0";
+  const num = parseInt(value, 10);
+  if (isNaN(num)) return value;
+  if (num >= 1_000_000_000) {
+    return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+  }
+  if (num >= 1_000_000) {
+    return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  }
+  if (num >= 1_000) {
+    return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  }
+  return num.toString();
+}
+
 export async function GET() {
   try {
     const channelId = process.env.YOUTUBE_CHANNEL_ID;
@@ -34,7 +61,7 @@ export async function GET() {
 
     const data = await safeJson(response);
 
-    if (!data.items || data.items.length === 0) {
+    if (!data.items || !Array.isArray(data.items) || data.items.length === 0) {
       return NextResponse.json(
         { error: "Channel not found." },
         { status: 404 }
@@ -42,15 +69,19 @@ export async function GET() {
     }
 
     const channel = data.items[0];
-    const snippet = channel.snippet;
-    const statistics = channel.statistics;
+    const snippet = channel.snippet || {};
+    const statistics = channel.statistics || {};
 
     return NextResponse.json({
-      title: snippet.title,
-      thumbnail: snippet.thumbnails?.high?.url || snippet.thumbnails?.medium?.url || snippet.thumbnails?.default?.url,
+      title: snippet.title || "Unknown Channel",
+      thumbnail:
+        snippet.thumbnails?.high?.url ||
+        snippet.thumbnails?.medium?.url ||
+        snippet.thumbnails?.default?.url ||
+        "",
       subscribers: formatCount(statistics.subscriberCount),
       views: formatCount(statistics.viewCount),
-      videos: statistics.videoCount,
+      videos: statistics.videoCount || "0",
     });
   } catch (error) {
     console.error("Failed to fetch YouTube channel:", error);
@@ -59,31 +90,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
-
-async function safeJson(response: Response) {
-  const text = await response.text();
-  if (!text) return {};
-  try {
-    return JSON.parse(text);
-  } catch {
-    console.error("Invalid JSON response:", response.status, text.slice(0, 200));
-    return {};
-  }
-}
-
-function formatCount(value?: string): string {
-  if (!value) return "0";
-  const num = parseInt(value, 10);
-  if (isNaN(num)) return value;
-  if (num >= 1_000_000_000) {
-    return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
-  }
-  if (num >= 1_000_000) {
-    return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-  }
-  if (num >= 1_000) {
-    return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
-  }
-  return num.toString();
 }

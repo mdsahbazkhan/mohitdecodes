@@ -14,8 +14,8 @@ import Link from "next/link";
 
 export default function RoadmapPage() {
   const params = useParams();
-  const idFromParams = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
-  const roadmap = useMemo(() => roadmaps.find((r) => r.id === idFromParams), [idFromParams]);
+  const id = typeof params?.id === "string" ? params.id : Array.isArray(params?.id) ? params.id[0] : "";
+  const roadmap = useMemo(() => roadmaps.find((r) => r.id === id), [id]);
 
   if (!roadmap) {
     return (
